@@ -1,0 +1,52 @@
+spring:
+  application:
+    name: origen-platform
+
+  profiles:
+    active: local
+
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=ORIGEN;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: changeMe123!
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui
+
+logging:
+  level:
+    root: INFO
+    cl.origen.platform: DEBUG
+    org.springframework.security: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+jwt:
+  issuer: ORIGEN
+  secret: CHANGE_THIS_SECRET_IN_LOCAL_ENVIRONMENT
+  expiration-minutes: 60

@@ -1,0 +1,53 @@
+# ============================================================
+# ORIGEN
+# Enterprise Portfolio Project
+# .gitattributes
+# ============================================================
+
+# Auto detect text files and normalize line endings
+* text=auto eol=lf
+
+# Source Code
+*.java          text diff=java
+*.kt            text
+*.groovy        text
+*.xml           text
+*.yml           text
+*.yaml          text
+*.properties    text
+*.sql           text
+*.md            text
+*.json          text
+*.ts            text
+*.js            text
+*.html          text
+*.css           text
+*.scss          text
+*.sh            text eol=lf
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+
+# Maven
+mvnw            text eol=lf
+mvnw.cmd        text eol=crlf
+
+# Binary files
+*.jar           binary
+*.war           binary
+*.ear           binary
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.gif           binary
+*.ico           binary
+*.pdf           binary
+*.zip           binary
+*.7z            binary
+
+# Docker
+Dockerfile      text eol=lf
+*.dockerignore  text eol=lf
+
+# Git merge hints
+package-lock.json merge=union
+pom.xml           merge
