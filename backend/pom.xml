@@ -6,20 +6,6 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cl.origen</groupId>
-    <artifactId>platform</artifactId>
-    <version>0.1.0-SNAPSHOT</version>
-    <name>ORIGEN Platform</name>
-    <description>Enterprise Portfolio Project</description>
-    <packaging>jar</packaging>
-
-    <properties>
-        <java.version>21</java.version>
-        <org.mapstruct.version>1.6.3</org.mapstruct.version>
-        <springdoc.version>2.8.9</springdoc.version>
-        <maven.compiler.release>21</maven.compiler.release>
-    </properties>
-
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -27,9 +13,27 @@
         <relativePath/>
     </parent>
 
+    <groupId>cl.origen</groupId>
+    <artifactId>platform</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+
+    <name>ORIGEN Platform</name>
+    <description>Enterprise Portfolio Project</description>
+    <packaging>jar</packaging>
+
+    <properties>
+        <java.version>21</java.version>
+        <maven.compiler.release>21</maven.compiler.release>
+
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
+        <springdoc.version>2.8.9</springdoc.version>
+        <jjwt.version>0.12.7</jjwt.version>
+    </properties>
+
     <dependencies>
 
         <!-- Spring Boot -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
@@ -51,6 +55,7 @@
         </dependency>
 
         <!-- SQL Server -->
+
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
@@ -58,6 +63,7 @@
         </dependency>
 
         <!-- Flyway -->
+
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-core</artifactId>
@@ -69,27 +75,29 @@
         </dependency>
 
         <!-- JWT -->
+
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
-            <version>0.12.7</version>
+            <version>${jjwt.version}</version>
         </dependency>
 
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
-            <version>0.12.7</version>
+            <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
 
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
-            <version>0.12.7</version>
+            <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
 
-        <!-- Documentation -->
+        <!-- OpenAPI -->
+
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
@@ -97,6 +105,7 @@
         </dependency>
 
         <!-- Lombok -->
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -104,6 +113,7 @@
         </dependency>
 
         <!-- MapStruct -->
+
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
@@ -111,6 +121,7 @@
         </dependency>
 
         <!-- Tests -->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -120,33 +131,62 @@
     </dependencies>
 
     <build>
+
         <plugins>
 
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+
+                <configuration>
+                    <layers>
+                        <enabled>true</enabled>
+                    </layers>
+                </configuration>
+
             </plugin>
 
             <plugin>
+                <artifactId>maven-resources-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+
                 <configuration>
+
                     <release>${maven.compiler.release}</release>
+
+                    <parameters>true</parameters>
+
                     <annotationProcessorPaths>
+
                         <path>
                             <groupId>org.projectlombok</groupId>
                             <artifactId>lombok</artifactId>
                         </path>
+
                         <path>
                             <groupId>org.mapstruct</groupId>
                             <artifactId>mapstruct-processor</artifactId>
                             <version>${org.mapstruct.version}</version>
                         </path>
+
                     </annotationProcessorPaths>
+
                 </configuration>
+
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
             </plugin>
 
         </plugins>
+
     </build>
 
 </project>

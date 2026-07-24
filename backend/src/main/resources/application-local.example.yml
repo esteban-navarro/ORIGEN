@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;databaseName=ORIGEN;encrypt=true;trustServerCertificate=true
+    username: sa
+    password: CHANGE_ME
+
+jwt:
+  secret: CHANGE_ME

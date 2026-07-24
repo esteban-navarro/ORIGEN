@@ -1,14 +1,14 @@
 spring:
-  application:
-    name: origen-platform
-
   profiles:
     active: local
 
+  application:
+    name: ORIGEN
+
   datasource:
-    url: jdbc:sqlserver://localhost:1433;databaseName=ORIGEN;encrypt=true;trustServerCertificate=true
-    username: sa
-    password: changeMe123!
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
 
   jpa:
@@ -22,23 +22,25 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+    baseline-on-migrate: true
 
 server:
   port: 8080
-  servlet:
-    context-path: /api
+
+application:
+  name: ORIGEN
+  version: 0.1.0
+  description: Modular Monolith Platform
 
 springdoc:
   api-docs:
     path: /v3/api-docs
-  swagger-ui:
-    path: /swagger-ui
 
-logging:
-  level:
-    root: INFO
-    cl.origen.platform: DEBUG
-    org.springframework.security: INFO
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    display-request-duration: true
 
 management:
   endpoints:
@@ -46,7 +48,24 @@ management:
       exposure:
         include: health,info
 
+  endpoint:
+    health:
+      show-details: always
+
+info:
+  app:
+    name: ${application.name}
+    version: ${application.version}
+    description: ${application.description}
+
+logging:
+  level:
+    root: INFO
+    cl.origen.platform: DEBUG
+    org.springframework.security: INFO
+    org.flywaydb: INFO
+
 jwt:
   issuer: ORIGEN
-  secret: CHANGE_THIS_SECRET_IN_LOCAL_ENVIRONMENT
+  secret: ${JWT_SECRET}
   expiration-minutes: 60

@@ -1,0 +1,44 @@
+services:
+
+  sqlserver:
+
+    image: ${SQLSERVER_IMAGE}
+
+    container_name: ${SQLSERVER_CONTAINER_NAME}
+
+    restart: unless-stopped
+
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "/opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P $$MSSQL_SA_PASSWORD -C -Q \"SELECT 1\" || exit 1"
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+    environment:
+      ACCEPT_EULA: ${SQLSERVER_ACCEPT_EULA}
+      MSSQL_PID: ${SQLSERVER_PID}
+      MSSQL_SA_PASSWORD: ${SQLSERVER_PASSWORD}
+
+    ports:
+      - "${SQLSERVER_PORT}:1433"
+
+    volumes:
+      - ${SQLSERVER_VOLUME}:/var/opt/mssql
+
+    networks:
+      - origen-network
+
+volumes:
+
+  origen-sqlserver-data:
+    name: ${SQLSERVER_VOLUME}
+
+networks:
+
+  origen-network:
+    name: ${DOCKER_NETWORK}
