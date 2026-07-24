@@ -10,7 +10,7 @@
 
 | Item | Value |
 |------|-------|
-| Version | 0.1.0 |
+| Version | 0.2.0 |
 | Status | In Development |
 | Architecture | Modular Monolith |
 | Java | 21 |
@@ -44,16 +44,30 @@ The project is being built incrementally through small, well-defined commits, al
 - ✅ External Configuration
 - ✅ Health Module
 
+## Authentication Module
+
+- ✅ RBAC domain model
+- ✅ User entity
+- ✅ Role entity
+- ✅ Permission entity
+- ✅ UserRole relationship
+- ✅ RolePermission relationship
+- ✅ Composite Keys (`@EmbeddedId`)
+- ✅ JPA Mapping (`@MapsId`)
+- ✅ Flyway migration
+- ✅ Initial seed data (Roles & Permissions)
+
 ## In Progress
 
-- ⏳ Authentication Module
+- ⏳ JPA Repositories
 
 ## Planned
 
 - JWT Authentication
 - Refresh Token
+- Login API
 - User Management
-- Role & Permission Management (RBAC)
+- Role & Permission Management
 - Angular 20 Frontend
 - CI/CD with GitHub Actions
 
@@ -101,22 +115,70 @@ backend
     ├── config
     │   └── properties
     ├── modules
+    │   ├── auth
     │   └── health
     └── security
 ```
 
 The project follows a **Modular Monolith** architecture where each business module encapsulates its own controllers, services, repositories, entities and DTOs.
 
-Planned modules:
+Current modules:
 
 ```
 modules
 ├── health
-├── auth
-├── users
-├── roles
-└── ...
+└── auth
 ```
+
+Current Auth structure:
+
+```
+auth
+├── entity
+│   ├── User
+│   ├── Role
+│   ├── Permission
+│   ├── UserRole
+│   ├── UserRoleId
+│   ├── RolePermission
+│   └── RolePermissionId
+├── controller
+├── dto
+├── exception
+├── mapper
+├── repository
+├── service
+└── validator
+```
+
+---
+
+# Database
+
+Database versioning is managed using **Flyway**.
+
+Current migrations:
+
+| Version | Description |
+|----------|-------------|
+| V1 | Initial Schema |
+| V2 | Authentication (RBAC) Schema |
+
+Current RBAC model:
+
+```
+User
+    │
+UserRole
+    │
+Role
+    │
+RolePermission
+    │
+Permission
+```
+
+The application automatically creates the database schema and inserts the initial roles and permissions during startup.
 
 ---
 
@@ -158,19 +220,19 @@ The Docker environment creates a SQL Server instance with the following default 
 
 ## 2. Create the local configuration
 
-Copy the example configuration file:
+Copy:
 
-```text
+```
 backend/src/main/resources/application-local.example.yml
 ```
 
 to
 
-```text
+```
 backend/src/main/resources/application-local.yml
 ```
 
-Modify the values if necessary for your local environment.
+Update the values if necessary.
 
 ---
 
@@ -188,6 +250,8 @@ mvn clean install
 ```bash
 mvn spring-boot:run
 ```
+
+During startup, Flyway automatically applies all pending database migrations.
 
 ---
 
@@ -219,36 +283,43 @@ This project prioritizes:
 
 - Clean Code
 - SOLID Principles
+- Domain-Driven Design concepts
 - Modular Design
 - Layered Architecture
 - REST API Best Practices
 - Incremental Development
 - Conventional Commits
 - Git Flow
+- Database Versioning with Flyway
 - Enterprise Software Practices
 
 ---
 
 # Roadmap
 
-### Completed
+## Completed
 
-- Project bootstrap
-- Docker environment
-- SQL Server integration
-- Flyway database versioning
-- Spring Security base configuration
-- OpenAPI / Swagger
-- Health module
+- ✅ Project bootstrap
+- ✅ Docker environment
+- ✅ SQL Server integration
+- ✅ Flyway database versioning
+- ✅ Spring Security base configuration
+- ✅ OpenAPI / Swagger
+- ✅ Health module
+- ✅ RBAC domain model
+- ✅ Authentication database schema
+- ✅ Initial roles and permissions
 
-### Next Milestones
+## Next Milestones
 
-- Authentication module
+- JPA repositories
+- Authentication services
 - JWT authentication
-- RBAC (Role-Based Access Control)
+- Login endpoint
+- Authorization
 - User management
 - Angular frontend
-- CI/CD Pipeline
+- CI/CD pipeline
 
 ---
 
