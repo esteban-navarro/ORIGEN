@@ -1,18 +1,17 @@
 package cl.origen.platform.config.properties;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.validation.annotation.Validated;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
-/**
- * JWT configuration properties.
- */
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.validation.annotation.Validated;
+
+import java.time.Duration;
+
 @Getter
 @RequiredArgsConstructor
 @Validated
-@ConfigurationProperties(prefix = "jwt")
+@ConfigurationProperties(prefix = "security.jwt")
 public class JwtProperties {
 
     /**
@@ -26,8 +25,8 @@ public class JwtProperties {
     private final String secret;
 
     /**
-     * JWT expiration time in minutes.
+     * JWT expiration.
      */
-    private final Long expirationMinutes;
+    private final Duration expiration;
 
 }

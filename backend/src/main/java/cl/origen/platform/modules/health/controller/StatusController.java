@@ -10,6 +10,10 @@ import cl.origen.platform.common.response.Response;
 import cl.origen.platform.common.response.ResponseFactory;
 import cl.origen.platform.modules.health.dto.StatusResponse;
 import cl.origen.platform.modules.health.service.StatusService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -18,6 +22,10 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
+@Tag(
+        name = "System",
+        description = "System monitoring endpoints."
+)
 public class StatusController {
 
     private final StatusService statusService;
@@ -25,15 +33,26 @@ public class StatusController {
     /**
      * Returns application status information.
      *
-     * @return application status response
+     * @return application status response.
      */
     @GetMapping("/status")
+    @Operation(
+            operationId = "getStatus",
+            summary = "Application status",
+            description = "Returns the current application status."
+    )
+    @ApiResponses({
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Application is running"
+            )
+    })
     public ResponseEntity<Response<StatusResponse>> getStatus() {
 
         return ResponseEntity.ok(
                 ResponseFactory.ok(
-                        statusService.getStatus(),
-                        ApiMessages.APPLICATION_RUNNING
+                        ApiMessages.APPLICATION_RUNNING,
+                        statusService.getStatus()
                 )
         );
     }

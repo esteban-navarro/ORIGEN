@@ -4,5 +4,18 @@ spring:
     username: sa
     password: CHANGE_ME
 
-jwt:
-  secret: CHANGE_ME
+security:
+  jwt:
+    issuer: ORIGEN
+    # Generate a 256-bit Base64 secret (JJWT Keys.secretKeyFor(HS256) or openssl rand -base64 32)
+    secret: CHANGE_THIS_SECRET_IN_LOCAL_ENVIRONMENT
+    expiration: 1h
+  bootstrap:
+    enabled: true
+    admin:
+      username: admin
+      password: Admin123*
+      email: admin@origen.local
+      first-name: System
+      last-name: Administrator
+

@@ -25,7 +25,7 @@ import lombok.Setter;
 public class UserRole {
 
     @EmbeddedId
-    private UserRoleId id;
+    private UserRoleId userRoleId;
 
     @MapsId("userId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)

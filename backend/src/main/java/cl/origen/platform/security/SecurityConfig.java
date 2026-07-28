@@ -1,68 +1,67 @@
 package cl.origen.platform.security;
 
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-/**
- * Configures the application's security.
- *
- * <p>
- * This configuration is prepared to evolve to JWT authentication.
- * Public endpoints are explicitly declared, while every other endpoint
- * requires authentication.
- * </p>
- */
+import cl.origen.platform.modules.auth.security.JwtAuthenticationFilter;
+
 @Configuration
-@EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
 
-    /**
-     * Public endpoints that do not require authentication.
-     */
-    private static final String[] PUBLIC_ENDPOINTS = {
-            "/swagger-ui/**",
-            "/swagger-ui.html",
-            "/v3/api-docs/**",
-            "/actuator/health",
-            "/api/v1/status"
-    };
+    private final DaoAuthenticationProvider authenticationProvider;
 
-    /**
-     * Configures the Spring Security filter chain.
-     *
-     * @param http HttpSecurity configuration.
-     * @return configured SecurityFilterChain.
-     * @throws Exception if a security configuration error occurs.
-     */
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(
+            HttpSecurity http) throws Exception {
 
         http
 
-                // REST API
-                .csrf(csrf -> csrf.disable())
+        .csrf(AbstractHttpConfigurer::disable)
 
-                // JWT will be stateless
-                .sessionManagement(session -> session
-                        .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .httpBasic(AbstractHttpConfigurer::disable)
 
-                // Public endpoints
-                .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
-                        .anyRequest().authenticated())
+        .formLogin(AbstractHttpConfigurer::disable)
 
-                // Disable default login page
-                .formLogin(form -> form.disable())
+        .sessionManagement(session ->
+                session.sessionCreationPolicy(
+                        SessionCreationPolicy.STATELESS))
 
-                // Disable HTTP Basic authentication
-                .httpBasic(httpBasic -> httpBasic.disable());
+        .authenticationProvider(authenticationProvider)
+
+        .addFilterBefore(
+                jwtAuthenticationFilter,
+                UsernamePasswordAuthenticationFilter.class)
+
+        .authorizeHttpRequests(authorize -> authorize
+
+                .requestMatchers(
+                        "/api/v1/auth/**",
+                        "/api/v1/status",
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html",
+                        "/actuator/health"
+                ).permitAll()
+
+                .anyRequest()
+                .authenticated()
+
+        );
 
         return http.build();
+
     }
 
 }

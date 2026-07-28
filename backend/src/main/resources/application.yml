@@ -29,8 +29,8 @@ server:
 
 application:
   name: ORIGEN
-  version: 0.1.0
-  description: Modular Monolith Platform
+  version: 0.3.0
+  description: Enterprise Full Stack Reference Application
 
 springdoc:
   api-docs:
@@ -65,7 +65,19 @@ logging:
     org.springframework.security: INFO
     org.flywaydb: INFO
 
-jwt:
-  issuer: ORIGEN
-  secret: ${JWT_SECRET}
-  expiration-minutes: 60
+security:
+
+  jwt:
+    issuer: ${JWT_ISSUER:origen}
+    secret: ${JWT_SECRET}
+    expiration: ${JWT_EXPIRATION:PT1H}
+
+  bootstrap:
+    enabled: false
+
+    admin:
+      username:
+      password:
+      email:
+      first-name:
+      last-name:

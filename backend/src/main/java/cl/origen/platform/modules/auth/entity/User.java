@@ -53,7 +53,7 @@ public class User {
     private String lastName;
 
     @Column(nullable = false)
-    private Boolean enabled;
+    private boolean enabled;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

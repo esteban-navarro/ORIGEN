@@ -1,0 +1,93 @@
+package cl.origen.platform.config;
+
+import java.util.List;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import cl.origen.platform.config.properties.ApplicationProperties;
+import io.swagger.v3.oas.models.Components;
+import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.info.Contact;
+import io.swagger.v3.oas.models.info.Info;
+import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
+import io.swagger.v3.oas.models.servers.Server;
+import lombok.RequiredArgsConstructor;
+
+@Configuration
+@RequiredArgsConstructor
+public class OpenApiConfig {
+
+    private static final String SECURITY_SCHEME_NAME = "Bearer Authentication";
+
+    private final ApplicationProperties applicationProperties;
+
+    @Bean
+    public OpenAPI origenOpenAPI() {
+
+        return new OpenAPI()
+
+                .info(apiInfo())
+
+                .servers(List.of(localDevelopmentServer()))
+
+                .components(
+                        new Components()
+                                .addSecuritySchemes(
+                                        SECURITY_SCHEME_NAME,
+                                        bearerSecurityScheme()
+                                )
+                )
+
+                .addSecurityItem(
+                        new SecurityRequirement()
+                                .addList(SECURITY_SCHEME_NAME)
+                );
+    }
+
+    private Info apiInfo() {
+
+        return new Info()
+
+                .title(applicationProperties.getName() + " API")
+
+                .version(applicationProperties.getVersion())
+
+                .description(applicationProperties.getDescription())
+
+                .contact(
+                        new Contact()
+                                .name("Esteban Navarro")
+                )
+
+                .license(
+                        new License()
+                                .name("MIT License")
+                );
+    }
+
+    private Server localDevelopmentServer() {
+
+        return new Server()
+
+                .url("http://localhost:8080")
+
+                .description("Local Development");
+    }
+
+    private SecurityScheme bearerSecurityScheme() {
+
+        return new SecurityScheme()
+
+                .type(SecurityScheme.Type.HTTP)
+
+                .scheme("bearer")
+
+                .bearerFormat("JWT")
+
+                .description("JWT Bearer token used to authenticate secured endpoints.");
+    }
+
+}
