@@ -23,12 +23,12 @@ logs/
 
 # ---------- Java / Maven ----------
 backend/target/
-backend/.mvn/wrapper/maven-wrapper.jar
 *.class
 
 # ---------- Spring Boot ----------
 backend/.springBeans
 backend/.sts4-cache
+backend/.flattened-pom.xml
 
 # ---------- Node / Angular ----------
 frontend/node_modules/
@@ -39,6 +39,7 @@ frontend/.cache/
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+frontend/.eslintcache
 
 # ---------- Environment ----------
 .env
@@ -78,9 +79,6 @@ site/
 
 # ---------- OS Generated ----------
 $RECYCLE.BIN/
-
-# ---------- VS Generated ----------
-.vscode/
 
 # ---------- Spring Profiles ----------
 **/application-local.yml

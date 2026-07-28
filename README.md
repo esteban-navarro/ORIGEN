@@ -1,242 +1,253 @@
 # ORIGEN
 
-> **Enterprise Portfolio Project**
->
-> ORIGEN is an enterprise-oriented Full Stack portfolio project designed to demonstrate software architecture, clean code, modular design and modern backend development practices using **Java 21, Spring Boot 3.5, SQL Server and Angular 20**.
+### Enterprise Full Stack Reference Application
+
+> Modern Full Stack reference application built with **Java 21**, **Spring Boot 3.5**, **Spring Security**, **SQL Server**, **Angular 20** and modern development practices.
+
+ORIGEN is an enterprise-oriented Full Stack reference application created to demonstrate modern software architecture, secure authentication, scalable application design and clean development practices.
+
+The backend platform is fully implemented, while the Angular frontend is currently under development.
+
+---
+
+![ORIGEN Architecture](docs/images/architecture.svg)
+
+---
+
+# Why ORIGEN?
+
+ORIGEN was created as a long-term reference application to demonstrate how a modern enterprise Full Stack system can be designed, implemented and evolved using Java, Spring Boot and Angular.
+
+Instead of focusing on isolated examples, the project emphasizes production-oriented architecture, maintainability, scalability and security.
+
+---
+
+# Highlights
+
+- Enterprise Full Stack Architecture
+- Java 21 + Spring Boot 3.5
+- Angular 20 *(In Development)*
+- Spring Security 6 + JWT Authentication
+- Role-Based Access Control (RBAC)
+- SQL Server + Flyway
+- Dockerized Development Environment
+- OpenAPI / Swagger
+- RESTful API Design
+
+---
+
+# Technology Stack
+
+| Layer | Technologies | Status |
+|--------|--------------|--------|
+| Backend | Java 21, Spring Boot 3.5 | ✅ |
+| Security | Spring Security 6, JWT, BCrypt | ✅ |
+| Persistence | Spring Data JPA, Hibernate | ✅ |
+| Database | SQL Server 2022 | ✅ |
+| Database Versioning | Flyway | ✅ |
+| Documentation | OpenAPI / Swagger | ✅ |
+| Infrastructure | Docker, Docker Compose | ✅ |
+| Frontend | Angular 20, Angular Material | 🚧 |
+| Build | Maven | ✅ |
+| CI/CD | GitHub Actions | 📋 Planned |
+
+---
+
+# Project Goals
+
+ORIGEN aims to demonstrate:
+
+- Enterprise software architecture
+- Secure authentication and authorization
+- Modern Full Stack development
+- Clean and maintainable code
+- Scalable application design
+- Production-oriented development practices
 
 ---
 
 # Project Status
 
-| Item | Value |
-|------|-------|
-| Version | 0.2.0 |
-| Status | In Development |
-| Architecture | Modular Monolith |
-| Java | 21 |
-| Spring Boot | 3.5.x |
+| Component | Status |
+|-----------|--------|
+| Backend | ✅ Stable |
+| Authentication | ✅ Completed |
+| RBAC | ✅ Completed |
+| Database | ✅ Completed |
+| Docker | ✅ Completed |
+| Swagger | ✅ Completed |
+| Angular Frontend | 🚧 In Development |
+| Automated Testing | 📋 Planned |
+| CI/CD | 📋 Planned |
 
 ---
 
-# Project Goal
+# Architecture
 
-ORIGEN is not intended to be a tutorial project.
+ORIGEN follows a **Modular Monolith** architecture where each business module owns its controllers, services, repositories, DTOs and entities.
 
-Its purpose is to simulate the architecture, coding standards and development practices commonly used in enterprise software applications.
+## Current Modules
 
-The project is being built incrementally through small, well-defined commits, allowing the complete development process to be followed from the initial infrastructure to a production-ready application.
+- Authentication Module
+- Health Module
+
+## Planned Modules
+
+- User Management Module
+- Role Management Module
+- Dashboard Module
+- Configuration Module
 
 ---
 
-# Current Progress
+# Current Features
 
-## Infrastructure
-
-- ✅ Spring Boot 3.5
-- ✅ Java 21
-- ✅ Maven
-- ✅ Docker
-- ✅ Docker Compose
-- ✅ SQL Server 2022
-- ✅ Flyway
-- ✅ Spring Security Base Configuration
-- ✅ Swagger / OpenAPI
-- ✅ External Configuration
-- ✅ Health Module
-
-## Authentication Module
-
-- ✅ RBAC domain model
-- ✅ User entity
-- ✅ Role entity
-- ✅ Permission entity
-- ✅ UserRole relationship
-- ✅ RolePermission relationship
-- ✅ Composite Keys (`@EmbeddedId`)
-- ✅ JPA Mapping (`@MapsId`)
-- ✅ Flyway migration
-- ✅ Initial seed data (Roles & Permissions)
-
-## In Progress
-
-- ⏳ JPA Repositories
-
-## Planned
+## Authentication
 
 - JWT Authentication
-- Refresh Token
 - Login API
-- User Management
-- Role & Permission Management
-- Angular 20 Frontend
-- CI/CD with GitHub Actions
+- Stateless Security
+- Spring Security 6
+- BCrypt Password Encryption
 
----
+## Authorization
 
-# Technologies
+- Role-Based Access Control (RBAC)
+- User ↔ Role relationships
+- Role ↔ Permission relationships
 
 ## Backend
 
 - Java 21
 - Spring Boot 3.5
-- Spring Security
 - Spring Data JPA
-- Flyway
-- Lombok
-- MapStruct
-- SpringDoc OpenAPI
-- Maven
+- SQL Server
+- Flyway Database Versioning
+- Global Exception Handling
+- OpenAPI Documentation
 
-## Database
-
-- Microsoft SQL Server 2022
-
-## DevOps
+## Infrastructure
 
 - Docker
 - Docker Compose
-
-## Frontend (Planned)
-
-- Angular 20
-- Angular Material
-- SCSS
-- TypeScript
-- RxJS
+- External Configuration
+- Health Endpoint
 
 ---
 
-# Backend Architecture
+# Authentication Flow
 
-```
-backend
-└── src/main/java/cl/origen/platform
-    ├── common
-    ├── config
-    │   └── properties
-    ├── modules
-    │   ├── auth
-    │   └── health
-    └── security
-```
-
-The project follows a **Modular Monolith** architecture where each business module encapsulates its own controllers, services, repositories, entities and DTOs.
-
-Current modules:
-
-```
-modules
-├── health
-└── auth
-```
-
-Current Auth structure:
-
-```
-auth
-├── entity
-│   ├── User
-│   ├── Role
-│   ├── Permission
-│   ├── UserRole
-│   ├── UserRoleId
-│   ├── RolePermission
-│   └── RolePermissionId
-├── controller
-├── dto
-├── exception
-├── mapper
-├── repository
-├── service
-└── validator
+```text
+Client
+   │
+POST /api/v1/auth/login
+   │
+AuthenticationController
+   │
+AuthenticationService
+   │
+AuthenticationManager
+   │
+Spring Security
+   │
+JWT Service
+   │
+Authenticated Response
 ```
 
 ---
 
 # Database
 
-Database versioning is managed using **Flyway**.
+Current RBAC schema:
+
+```text
+User
+  │
+UserRole
+  │
+Role
+  │
+RolePermission
+  │
+Permission
+```
+
+Database migrations are managed using **Flyway**.
 
 Current migrations:
 
 | Version | Description |
 |----------|-------------|
 | V1 | Initial Schema |
-| V2 | Authentication (RBAC) Schema |
-
-Current RBAC model:
-
-```
-User
-    │
-UserRole
-    │
-Role
-    │
-RolePermission
-    │
-Permission
-```
-
-The application automatically creates the database schema and inserts the initial roles and permissions during startup.
+| V2 | Authentication & RBAC |
 
 ---
 
-# Repository Structure
+# Screenshots
 
-```
-ORIGEN
-├── backend
-├── frontend
-├── database
-├── docker
-├── docs
-├── .github
-├── README.md
-└── LICENSE
-```
+## Architecture
+
+![Architecture](docs/images/architecture.svg)
 
 ---
 
-# Running the Project
+## Swagger UI
 
-## 1. Start SQL Server
+![Swagger UI](docs/images/swagger.png)
+
+---
+
+## Authentication
+
+![Authentication](docs/images/login.png)
+
+---
+
+## Angular Frontend
+
+*(Coming Soon)*
+
+---
+
+# Getting Started
+
+## 1. Clone the repository
 
 ```bash
-docker compose -f docker/docker-compose.yml up -d
+git clone https://github.com/esteban-navarro/ORIGEN.git
+cd ORIGEN
 ```
-
-The Docker environment creates a SQL Server instance with the following default configuration:
-
-| Property | Value |
-|----------|-------|
-| Server | localhost |
-| Port | 1433 |
-| Database | ORIGEN |
-| Username | sa |
-| Password | Origen@2026Dev |
 
 ---
 
-## 2. Create the local configuration
+## 2. Configure the application
 
 Copy:
 
-```
+```text
 backend/src/main/resources/application-local.example.yml
 ```
 
 to
 
-```
+```text
 backend/src/main/resources/application-local.yml
 ```
 
-Update the values if necessary.
+Configure your local environment.
 
 ---
 
-## 3. Build the project
+## 3. Start SQL Server
+
+```bash
+docker compose -f docker/docker-compose.yml up -d
+```
+
+---
+
+## 4. Build the project
 
 ```bash
 cd backend
@@ -245,53 +256,33 @@ mvn clean install
 
 ---
 
-## 4. Run the application
+## 5. Run the application
 
 ```bash
 mvn spring-boot:run
 ```
 
-During startup, Flyway automatically applies all pending database migrations.
-
 ---
 
-# Available Endpoints
+## 6. Open Swagger
 
-## Swagger UI
+Swagger UI
 
-```
+```text
 http://localhost:8080/swagger-ui.html
 ```
 
-## OpenAPI
+OpenAPI
 
-```
+```text
 http://localhost:8080/v3/api-docs
 ```
 
-## Health Endpoint
+Health Endpoint
 
-```
+```text
 GET /api/v1/status
 ```
-
----
-
-# Development Principles
-
-This project prioritizes:
-
-- Clean Code
-- SOLID Principles
-- Domain-Driven Design concepts
-- Modular Design
-- Layered Architecture
-- REST API Best Practices
-- Incremental Development
-- Conventional Commits
-- Git Flow
-- Database Versioning with Flyway
-- Enterprise Software Practices
 
 ---
 
@@ -299,30 +290,64 @@ This project prioritizes:
 
 ## Completed
 
-- ✅ Project bootstrap
-- ✅ Docker environment
-- ✅ SQL Server integration
-- ✅ Flyway database versioning
-- ✅ Spring Security base configuration
-- ✅ OpenAPI / Swagger
-- ✅ Health module
-- ✅ RBAC domain model
-- ✅ Authentication database schema
-- ✅ Initial roles and permissions
+- Project Bootstrap
+- Spring Boot Configuration
+- Docker Environment
+- SQL Server Integration
+- Flyway Migrations
+- Spring Security
+- JWT Authentication
+- Login API
+- RBAC
+- Swagger
+- Global Exception Handling
 
-## Next Milestones
+---
 
-- JPA repositories
-- Authentication services
-- JWT authentication
-- Login endpoint
-- Authorization
-- User management
-- Angular frontend
-- CI/CD pipeline
+## Next
+
+- Angular 20 Application
+- Dashboard
+- User Management
+- Role Management
+- Permission Management
+- JWT Refresh Token
+- Automated Testing
+- GitHub Actions CI/CD
+
+---
+
+# Repository Structure
+
+```text
+ORIGEN
+│
+├── backend
+├── frontend
+├── database
+├── docker
+├── docs
+│   └── images
+├── scripts
+├── README.md
+└── LICENSE
+```
+
+---
+
+# Development Practices
+
+- Clean Architecture
+- Layered Architecture
+- SOLID Principles
+- REST API Design
+- Modular Monolith Architecture
+- Conventional Commits
+- Git Flow
+- Clean Code
 
 ---
 
 # License
 
-MIT License.
+This project is licensed under the MIT License.
