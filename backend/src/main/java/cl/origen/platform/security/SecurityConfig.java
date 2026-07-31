@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.Customizer;
 
 import cl.origen.platform.modules.auth.security.JwtAuthenticationFilter;
 
@@ -27,6 +28,8 @@ public class SecurityConfig {
             HttpSecurity http) throws Exception {
 
         http
+
+        .cors(Customizer.withDefaults())
 
         .csrf(AbstractHttpConfigurer::disable)
 
@@ -47,7 +50,7 @@ public class SecurityConfig {
         .authorizeHttpRequests(authorize -> authorize
 
                 .requestMatchers(
-                        "/api/v1/auth/**",
+                        "/api/v1/auth/login",
                         "/api/v1/status",
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
