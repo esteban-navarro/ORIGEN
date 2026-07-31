@@ -1,0 +1,44 @@
+<div class="sidebar">
+
+    @for (group of navigation; track group.title) {
+
+        <div class="menu-group">
+
+            <div class="menu-title">
+
+                {{ group.title }}
+
+            </div>
+
+            <mat-nav-list>
+
+                @for (item of group.items; track item.label) {
+
+                    <a
+                        mat-list-item
+                        [routerLink]="item.route"
+                        routerLinkActive="active">
+
+                        <mat-icon matListItemIcon>
+
+                            {{ item.icon }}
+
+                        </mat-icon>
+
+                        <span matListItemTitle>
+
+                            {{ item.label }}
+
+                        </span>
+
+                    </a>
+
+                }
+
+            </mat-nav-list>
+
+        </div>
+
+    }
+
+</div>

@@ -1,0 +1,55 @@
+:host {
+
+    display: block;
+
+    width: 280px;
+
+    height: 100%;
+
+    background: #FFFFFF;
+
+}
+
+.sidebar {
+
+    padding: 24px 16px;
+
+}
+
+.menu-group {
+
+    margin-bottom: 24px;
+
+}
+
+.menu-title {
+
+    margin-bottom: 8px;
+
+    padding: 0 16px;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    color: #6B7280;
+
+}
+
+a.active {
+
+    background: #EFF6FF;
+
+    border-radius: 12px;
+
+    color: #2563EB;
+
+}
+
+mat-icon {
+
+    color: inherit;
+
+}

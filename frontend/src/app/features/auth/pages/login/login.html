@@ -1,0 +1,124 @@
+<div class="login-container">
+
+    <div class="login-brand">
+
+        <div class="brand-content">
+
+            <div class="logo">
+                ORIGEN
+            </div>
+
+            <h1>Enterprise Platform</h1>
+
+            <p>
+                Plataforma empresarial para la administración de usuarios, roles y permisos,
+                desarrollada con una arquitectura moderna basada en Java, Spring Boot y Angular.
+            </p>
+
+            <div class="tech-stack">
+
+              <span>Java 21</span>
+              <span>Spring Boot 3</span>
+              <span>Angular 20</span>
+              <span>SQL Server</span>
+              <span>JWT</span>
+              <span>Docker</span>
+
+          </div>
+
+        </div>
+
+        <div class="brand-footer">
+
+          <div class="brand-name">
+              ORIGEN Platform
+          </div>
+
+          <div class="brand-version">
+              Versión 1.0.0
+          </div>
+
+          <div class="brand-copy">
+              © 2026 ORIGEN
+          </div>
+
+      </div>
+
+    </div>
+
+    <div class="login-form">
+
+      <div class="login-card">
+
+          <h2>Bienvenido</h2>
+
+          <p class="subtitle">
+              Inicia sesión para continuar.
+          </p>
+
+          <form
+            [formGroup]="loginForm"
+            (ngSubmit)="login()">
+
+            <mat-form-field appearance="outline">
+
+                <mat-label>Usuario</mat-label>
+
+                <input
+                    matInput
+                    formControlName="username">
+
+                <mat-icon matPrefix>person</mat-icon>
+
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+
+                <mat-label>Contraseña</mat-label>
+
+                <input
+                    matInput
+                    [type]="hidePassword() ? 'password' : 'text'"
+                    formControlName="password">
+
+                <mat-icon matPrefix>lock</mat-icon>
+
+                <button
+                    mat-icon-button
+                    matSuffix
+                    type="button"
+                    (click)="hidePassword.set(!hidePassword())">
+
+                    <mat-icon>
+
+                        {{ hidePassword() ? 'visibility' : 'visibility_off' }}
+
+                    </mat-icon>
+
+                </button>
+
+            </mat-form-field>
+
+            <mat-checkbox
+                formControlName="remember">
+
+                Recordarme
+
+            </mat-checkbox>
+
+            <button
+                mat-raised-button
+                color="primary"
+                type="submit">
+
+                Iniciar sesión
+
+            </button>
+
+        </form>
+
+      </div>
+
+  </div>
+
+</div>

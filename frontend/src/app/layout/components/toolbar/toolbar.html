@@ -1,0 +1,100 @@
+<mat-toolbar class="toolbar">
+
+    <div class="toolbar-left">
+
+        <button
+            mat-icon-button
+            aria-label="Abrir menú">
+
+            <mat-icon>menu</mat-icon>
+
+        </button>
+
+        <div class="logo">
+
+            <span class="logo-icon"></span>
+
+            <span class="logo-text">
+
+                ORIGEN
+
+            </span>
+
+        </div>
+
+    </div>
+
+    <div class="toolbar-center">
+
+        <mat-form-field appearance="outline">
+
+            <mat-icon matPrefix>
+
+                search
+
+            </mat-icon>
+
+            <mat-label>Buscar</mat-label>
+
+            <input
+                id="search"
+                matInput
+                aria-label="Buscar"
+                placeholder="Buscar...">
+
+        </mat-form-field>
+
+    </div>
+
+    <div class="toolbar-right">
+
+        <button
+            mat-icon-button>
+
+            <mat-icon>
+
+                notifications
+
+            </mat-icon>
+
+        </button>
+
+        <button
+          mat-button
+          [matMenuTriggerFor]="userMenu">
+
+          <mat-icon>
+
+              account_circle
+
+          </mat-icon>
+
+          {{ currentUser }}
+
+      </button>
+
+      <mat-menu #userMenu="matMenu">
+
+          <button
+              mat-menu-item
+              (click)="logout()">
+
+              <mat-icon>
+
+                  logout
+
+              </mat-icon>
+
+              <span>
+
+                  Cerrar sesión
+
+              </span>
+
+          </button>
+
+      </mat-menu>
+
+    </div>
+
+</mat-toolbar>

@@ -1,0 +1,89 @@
+:host {
+    display: block;
+}
+
+.toolbar {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    height: 64px;
+
+    background: #FFFFFF;
+
+    border-bottom: 1px solid #E5E7EB;
+
+    padding: 0 24px;
+
+}
+
+.toolbar-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 16px;
+
+}
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+.logo-icon {
+
+    width: 18px;
+
+    height: 18px;
+
+    border-radius: 6px;
+
+    background: #2563EB;
+
+}
+
+.logo-text {
+
+    font-size: 20px;
+
+    font-weight: 600;
+
+    letter-spacing: .5px;
+
+}
+
+.toolbar-center {
+
+    flex: 1;
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+mat-form-field {
+
+    width: 420px;
+
+}
+
+.toolbar-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+}
