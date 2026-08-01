@@ -29,8 +29,8 @@ server:
 
 application:
   name: ORIGEN
-  version: 0.3.0
-  description: Enterprise Full Stack Reference Application
+  version: 1.1.0
+  description: Modern Enterprise Full Stack Platform
 
 springdoc:
   api-docs:

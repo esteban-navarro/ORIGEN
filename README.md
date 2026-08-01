@@ -1,68 +1,22 @@
-# ORIGEN
+<p align="center">
+    <img src="docs/images/origen-logo.png" width="220" alt="ORIGEN Logo">
+</p>
 
-### Enterprise Full Stack Reference Application
+<h1 align="center">ORIGEN</h1>
 
-> Modern Full Stack reference application built with **Java 21**, **Spring Boot 3.5**, **Spring Security**, **SQL Server**, **Angular 20** and modern development practices.
+<p align="center">
+<b>Modern Enterprise Full Stack Platform</b>
+</p>
 
-ORIGEN is an enterprise-oriented Full Stack reference application created to demonstrate modern software architecture, secure authentication, scalable application design and clean development practices.
-
-The backend platform is fully implemented, while the Angular frontend is currently under development.
-
----
-
-![ORIGEN Architecture](docs/images/architecture.svg)
-
----
-
-# Why ORIGEN?
-
-ORIGEN was created as a long-term reference application to demonstrate how a modern enterprise Full Stack system can be designed, implemented and evolved using Java, Spring Boot and Angular.
-
-Instead of focusing on isolated examples, the project emphasizes production-oriented architecture, maintainability, scalability and security.
+<p align="center">
+Java 21 • Spring Boot 3.5 • Angular 20 • SQL Server • JWT • Docker
+</p>
 
 ---
 
-# Highlights
+ORIGEN is a modern enterprise Full Stack platform built to demonstrate production-ready software architecture using **Java 21**, **Spring Boot 3.5**, **Angular 20**, **SQL Server**, and **Spring Security**.
 
-- Enterprise Full Stack Architecture
-- Java 21 + Spring Boot 3.5
-- Angular 20 *(In Development)*
-- Spring Security 6 + JWT Authentication
-- Role-Based Access Control (RBAC)
-- SQL Server + Flyway
-- Dockerized Development Environment
-- OpenAPI / Swagger
-- RESTful API Design
-
----
-
-# Technology Stack
-
-| Layer | Technologies | Status |
-|--------|--------------|--------|
-| Backend | Java 21, Spring Boot 3.5 | ✅ |
-| Security | Spring Security 6, JWT, BCrypt | ✅ |
-| Persistence | Spring Data JPA, Hibernate | ✅ |
-| Database | SQL Server 2022 | ✅ |
-| Database Versioning | Flyway | ✅ |
-| Documentation | OpenAPI / Swagger | ✅ |
-| Infrastructure | Docker, Docker Compose | ✅ |
-| Frontend | Angular 20, Angular Material | 🚧 |
-| Build | Maven | ✅ |
-| CI/CD | GitHub Actions | 📋 Planned |
-
----
-
-# Project Goals
-
-ORIGEN aims to demonstrate:
-
-- Enterprise software architecture
-- Secure authentication and authorization
-- Modern Full Stack development
-- Clean and maintainable code
-- Scalable application design
-- Production-oriented development practices
+The project emphasizes clean architecture, scalability, maintainability, secure authentication and modular software design following enterprise development practices.
 
 ---
 
@@ -72,141 +26,111 @@ ORIGEN aims to demonstrate:
 |-----------|--------|
 | Backend | ✅ Stable |
 | Authentication | ✅ Completed |
-| RBAC | ✅ Completed |
-| Database | ✅ Completed |
-| Docker | ✅ Completed |
-| Swagger | ✅ Completed |
-| Angular Frontend | 🚧 In Development |
-| Automated Testing | 📋 Planned |
+| Authorization (RBAC) | ✅ Completed |
+| Angular Bootstrap | ✅ Completed |
+| Login Module | ✅ Completed |
+| Application Layout | ✅ Completed |
+| Dashboard Structure | 🚧 In Progress |
+| User Management | 📋 Planned |
+| Role Management | 📋 Planned |
 | CI/CD | 📋 Planned |
 
 ---
 
-# Architecture
+# Technology Stack
 
-ORIGEN follows a **Modular Monolith** architecture where each business module owns its controllers, services, repositories, DTOs and entities.
+| Layer | Technologies |
+|--------|--------------|
+| Backend | Java 21, Spring Boot 3.5 |
+| Frontend | Angular 20, Angular Material |
+| Security | Spring Security 6, JWT, BCrypt |
+| Persistence | Spring Data JPA, Hibernate |
+| Database | SQL Server 2022 |
+| Database Versioning | Flyway |
+| Documentation | OpenAPI / Swagger |
+| Infrastructure | Docker, Docker Compose |
+| Build | Maven |
 
-## Current Modules
+---
 
-- Authentication Module
-- Health Module
+# Highlights
 
-## Planned Modules
+- Modern Enterprise Full Stack Platform
+- Modular Monolith Architecture
+- Java 21 + Spring Boot 3.5
+- Angular 20 + Angular Material
+- Spring Security 6
+- JWT Authentication
+- Role-Based Access Control (RBAC)
+- SQL Server + Flyway
+- Dockerized Development Environment
+- OpenAPI / Swagger
+- Responsive User Interface
+- Clean Architecture
+- SOLID Principles
 
-- User Management Module
-- Role Management Module
-- Dashboard Module
-- Configuration Module
+---
+
+# System Overview
+
+<p align="center">
+    <img src="docs/images/architecture.png" width="100%" alt="ORIGEN Architecture">
+</p>
+
+ORIGEN follows a modular enterprise architecture where each business module owns its controllers, services, repositories, DTOs and entities, promoting maintainability, scalability and clear separation of responsibilities.
+
+---
+
+# Application Screenshots
+
+## Angular Login
+
+<p align="center">
+    <img src="docs/images/login.png" width="100%" alt="Angular Login">
+</p>
+
+Modern authentication interface built with Angular 20 and Angular Material.
+
+---
+
+## Swagger API
+
+<p align="center">
+    <img src="docs/images/swagger.png" width="100%" alt="Swagger UI">
+</p>
+
+Interactive REST API documentation generated using OpenAPI 3.
 
 ---
 
 # Current Features
 
-## Authentication
-
-- JWT Authentication
-- Login API
-- Stateless Security
-- Spring Security 6
-- BCrypt Password Encryption
-
-## Authorization
-
-- Role-Based Access Control (RBAC)
-- User ↔ Role relationships
-- Role ↔ Permission relationships
-
 ## Backend
 
 - Java 21
 - Spring Boot 3.5
+- REST API
 - Spring Data JPA
-- SQL Server
-- Flyway Database Versioning
+- Bean Validation
 - Global Exception Handling
-- OpenAPI Documentation
+
+## Security
+
+- Spring Security 6
+- JWT Authentication
+- BCrypt Password Encryption
+- Role-Based Access Control (RBAC)
+
+## Database
+
+- SQL Server 2022
+- Flyway Database Versioning
 
 ## Infrastructure
 
 - Docker
 - Docker Compose
 - External Configuration
-- Health Endpoint
-
----
-
-# Authentication Flow
-
-```text
-Client
-   │
-POST /api/v1/auth/login
-   │
-AuthenticationController
-   │
-AuthenticationService
-   │
-AuthenticationManager
-   │
-Spring Security
-   │
-JWT Service
-   │
-Authenticated Response
-```
-
----
-
-# Database
-
-Current RBAC schema:
-
-```text
-User
-  │
-UserRole
-  │
-Role
-  │
-RolePermission
-  │
-Permission
-```
-
-Database migrations are managed using **Flyway**.
-
-Current migrations:
-
-| Version | Description |
-|----------|-------------|
-| V1 | Initial Schema |
-| V2 | Authentication & RBAC |
-
----
-
-# Screenshots
-
-## Architecture
-
-![Architecture](docs/images/architecture.svg)
-
----
-
-## Swagger UI
-
-![Swagger UI](docs/images/swagger.png)
-
----
-
-## Authentication
-
-![Authentication](docs/images/login.png)
-
----
-
-## Angular Frontend
-
-*(Coming Soon)*
 
 ---
 
@@ -216,14 +140,15 @@ Current migrations:
 
 ```bash
 git clone https://github.com/esteban-navarro/ORIGEN.git
+
 cd ORIGEN
 ```
 
 ---
 
-## 2. Configure the application
+## 2. Configure the Backend
 
-Copy:
+Copy
 
 ```text
 backend/src/main/resources/application-local.example.yml
@@ -235,7 +160,7 @@ to
 backend/src/main/resources/application-local.yml
 ```
 
-Configure your local environment.
+and configure your local environment.
 
 ---
 
@@ -247,73 +172,63 @@ docker compose -f docker/docker-compose.yml up -d
 
 ---
 
-## 4. Build the project
+## 4. Run the Backend
 
 ```bash
 cd backend
+
 mvn clean install
-```
 
----
-
-## 5. Run the application
-
-```bash
 mvn spring-boot:run
 ```
 
+Backend URL
+
+```
+http://localhost:8080
+```
+
 ---
 
-## 6. Open Swagger
+## 5. Run the Frontend
+
+Open a new terminal.
+
+```bash
+cd frontend
+
+npm install
+
+ng serve
+```
+
+Frontend URL
+
+```
+http://localhost:4200
+```
+
+Login using the default administrator account:
+
+| Username | Password |
+|----------|----------|
+| admin | Password123! |
+
+---
+
+## 6. API Documentation
 
 Swagger UI
 
-```text
+```
 http://localhost:8080/swagger-ui.html
 ```
 
 OpenAPI
 
-```text
+```
 http://localhost:8080/v3/api-docs
 ```
-
-Health Endpoint
-
-```text
-GET /api/v1/status
-```
-
----
-
-# Roadmap
-
-## Completed
-
-- Project Bootstrap
-- Spring Boot Configuration
-- Docker Environment
-- SQL Server Integration
-- Flyway Migrations
-- Spring Security
-- JWT Authentication
-- Login API
-- RBAC
-- Swagger
-- Global Exception Handling
-
----
-
-## Next
-
-- Angular 20 Application
-- Dashboard
-- User Management
-- Role Management
-- Permission Management
-- JWT Refresh Token
-- Automated Testing
-- GitHub Actions CI/CD
 
 ---
 
@@ -335,13 +250,51 @@ ORIGEN
 
 ---
 
+# Roadmap
+
+## Completed
+
+- Backend Foundation
+- Spring Security
+- JWT Authentication
+- RBAC Authorization
+- SQL Server Integration
+- Flyway Migrations
+- Docker Environment
+- Swagger Documentation
+- Angular Bootstrap
+- Login Module
+- Application Layout
+
+---
+
+## In Progress
+
+- Dashboard Module
+- Frontend Navigation
+- Feature Modules
+
+---
+
+## Planned
+
+- User Management
+- Role Management
+- Permission Management
+- Refresh Token
+- Automated Testing
+- GitHub Actions
+- CI/CD Pipeline
+
+---
+
 # Development Practices
 
 - Clean Architecture
-- Layered Architecture
 - SOLID Principles
+- Layered Architecture
 - REST API Design
-- Modular Monolith Architecture
+- Modular Monolith
 - Conventional Commits
 - Git Flow
 - Clean Code
