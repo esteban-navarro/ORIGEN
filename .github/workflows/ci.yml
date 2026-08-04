@@ -30,6 +30,7 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
+          cache: maven
 
       - name: Show Java version
         run: java -version
