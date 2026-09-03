@@ -8,22 +8,36 @@ on:
 
 jobs:
   backend:
-
     name: Backend Build
-
     runs-on: ubuntu-latest
 
     defaults:
       run:
         working-directory: backend
 
+    env:
+      SPRING_PROFILES_ACTIVE: local
+
+      DB_URL: jdbc:sqlserver://localhost:1433;databaseName=ORIGEN;encrypt=true;trustServerCertificate=true
+      DB_USERNAME: sa
+      DB_PASSWORD: ${{ secrets.CI_DB_PASSWORD }}
+
+      JWT_ISSUER: ORIGEN
+      JWT_SECRET: ${{ secrets.CI_JWT_SECRET }}
+
+      SQLSERVER_IMAGE: mcr.microsoft.com/mssql/server:2022-latest
+      SQLSERVER_CONTAINER_NAME: origen-sqlserver
+      SQLSERVER_ACCEPT_EULA: Y
+      SQLSERVER_PID: Developer
+      SQLSERVER_PASSWORD: ${{ secrets.CI_DB_PASSWORD }}
+      SQLSERVER_PORT: 1433
+      SQLSERVER_VOLUME: origen-sqlserver-data
+      DOCKER_NETWORK: origen-network
+
     steps:
 
       - name: Checkout repository
         uses: actions/checkout@v4
-
-      - name: Show repository files
-        run: ls -la
 
       - name: Set up Java 21
         uses: actions/setup-java@v4
@@ -41,5 +55,59 @@ jobs:
       - name: Show Maven Wrapper version
         run: ./mvnw --version
 
-      - name: Build Spring Boot application
+      - name: Start SQL Server
+        working-directory: .
+        run: |
+          docker compose -f docker/docker-compose.yml up -d
+
+      - name: Wait for SQL Server
+        working-directory: .
+        shell: bash
+        run: |
+          echo "Waiting for SQL Server to become healthy..."
+
+          for i in {1..30}; do
+            STATUS=$(docker inspect --format='{{.State.Health.Status}}' origen-sqlserver 2>/dev/null || true)
+
+            echo "Attempt $i/30 - status: $STATUS"
+
+            if [ "$STATUS" = "healthy" ]; then
+              echo "SQL Server is healthy."
+              exit 0
+            fi
+
+            sleep 5
+          done
+
+          echo "SQL Server did not become healthy in time."
+          docker compose -f docker/docker-compose.yml ps
+          docker compose -f docker/docker-compose.yml logs sqlserver
+          exit 1
+
+      - name: Verify database initialization script
+        shell: bash
+        run: |
+          echo "Workspace: $GITHUB_WORKSPACE"
+          echo "Current directory: $(pwd)"
+          echo "Database script:"
+          ls -la "$GITHUB_WORKSPACE/database/init/"
+
+      - name: Create ORIGEN database
+        shell: bash
+        run: |
+          cat "$GITHUB_WORKSPACE/database/init/001__create_database.sql" | \
+            docker exec -i origen-sqlserver \
+              /opt/mssql-tools18/bin/sqlcmd \
+              -S localhost \
+              -U sa \
+              -P "$SQLSERVER_PASSWORD" \
+              -C \
+              -i /dev/stdin
+
+      - name: Build and verify backend
         run: ./mvnw clean verify
+
+      - name: Show SQL Server logs on failure
+        if: failure()
+        working-directory: .
+        run: docker compose -f docker/docker-compose.yml logs sqlserver
