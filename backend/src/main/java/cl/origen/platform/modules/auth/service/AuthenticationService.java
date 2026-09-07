@@ -1,9 +1,9 @@
 package cl.origen.platform.modules.auth.service;
 
 import cl.origen.platform.config.properties.JwtProperties;
-import cl.origen.platform.modules.auth.dto.AuthenticatedUserResponse;
-import cl.origen.platform.modules.auth.dto.LoginRequest;
-import cl.origen.platform.modules.auth.dto.LoginResponse;
+import cl.origen.platform.modules.auth.dto.request.LoginRequest;
+import cl.origen.platform.modules.auth.dto.response.AuthenticatedUserResponse;
+import cl.origen.platform.modules.auth.dto.response.LoginResponse;
 import cl.origen.platform.modules.auth.security.AuthenticationUserDetails;
 import cl.origen.platform.modules.auth.security.JwtService;
 

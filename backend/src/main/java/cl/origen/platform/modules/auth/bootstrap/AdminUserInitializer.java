@@ -2,12 +2,12 @@ package cl.origen.platform.modules.auth.bootstrap;
 
 import cl.origen.platform.config.properties.BootstrapProperties;
 import cl.origen.platform.modules.auth.entity.Role;
-import cl.origen.platform.modules.auth.entity.User;
 import cl.origen.platform.modules.auth.entity.UserRole;
 import cl.origen.platform.modules.auth.entity.UserRoleId;
 import cl.origen.platform.modules.auth.repository.RoleRepository;
-import cl.origen.platform.modules.auth.repository.UserRepository;
 import cl.origen.platform.modules.auth.repository.UserRoleRepository;
+import cl.origen.platform.modules.user.entity.User;
+import cl.origen.platform.modules.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package cl.origen.platform.modules.auth.dto;
+package cl.origen.platform.modules.auth.dto.response;
 
 import lombok.Builder;
 import lombok.Getter;

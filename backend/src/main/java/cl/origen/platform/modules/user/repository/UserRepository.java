@@ -1,9 +1,9 @@
-package cl.origen.platform.modules.auth.repository;
-
-import cl.origen.platform.modules.auth.entity.User;
+package cl.origen.platform.modules.user.repository;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import cl.origen.platform.modules.user.entity.User;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -23,5 +23,9 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     boolean existsByUsernameIgnoreCase(String username);
 
     boolean existsByEmailIgnoreCase(String email);
+
+    boolean existsByUsernameIgnoreCaseAndIdNot(String username, UUID id);
+
+    boolean existsByEmailIgnoreCaseAndIdNot(String email, UUID id);
 
 }

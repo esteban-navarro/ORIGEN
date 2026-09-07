@@ -1,5 +1,6 @@
 package cl.origen.platform.modules.auth.entity;
 
+import cl.origen.platform.modules.user.entity.User;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;

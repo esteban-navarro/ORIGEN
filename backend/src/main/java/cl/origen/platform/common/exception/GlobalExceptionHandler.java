@@ -81,6 +81,46 @@ public class GlobalExceptionHandler {
     }
 
     /**
+     * Handles requests for resources that do not exist.
+     *
+     * @param ex resource not found exception
+     * @return not found response
+     */
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Response<Void>> handleResourceNotFound(
+            final ResourceNotFoundException ex) {
+
+        log.warn("Resource not found: {}", ex.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(
+                        ResponseFactory.error(
+                                ex.getMessage()));
+
+    }
+
+    /**
+     * Handles resource conflicts.
+     *
+     * @param ex conflict exception
+     * @return conflict response
+     */
+    @ExceptionHandler(ConflictException.class)
+    public ResponseEntity<Response<Void>> handleConflict(
+            final ConflictException ex) {
+
+        log.warn("Resource conflict: {}", ex.getMessage());
+
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(
+                        ResponseFactory.error(
+                                ex.getMessage()));
+
+    }
+
+    /**
      * Handles unexpected exceptions.
      *
      * @param ex unexpected exception

@@ -1,4 +1,6 @@
-package cl.origen.platform.modules.auth.entity;
+package cl.origen.platform.modules.user.entity;
+
+import cl.origen.platform.modules.auth.entity.UserRole;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;

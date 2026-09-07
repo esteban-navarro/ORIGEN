@@ -1,12 +1,12 @@
 package cl.origen.platform.modules.auth.security;
 
+import cl.origen.platform.common.constants.ApiMessages;
 import cl.origen.platform.modules.auth.entity.Permission;
 import cl.origen.platform.modules.auth.entity.Role;
 import cl.origen.platform.modules.auth.entity.RolePermission;
-import cl.origen.platform.modules.auth.entity.User;
 import cl.origen.platform.modules.auth.entity.UserRole;
-import cl.origen.platform.modules.auth.repository.UserRepository;
-
+import cl.origen.platform.modules.user.entity.User;
+import cl.origen.platform.modules.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +40,7 @@ public class AuthenticationUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsernameIgnoreCase(username)
                 .orElseThrow(() ->
                         new UsernameNotFoundException(
-                                "User not found: "));
+                                ApiMessages.USER_NOT_FOUND));
 
         return AuthenticationUserDetails.builder()
                 .id(user.getId())

@@ -16,7 +16,7 @@ Java 21 • Spring Boot 3.5 • Angular 20 • SQL Server • JWT • Docker
 
 ORIGEN is a modern enterprise Full Stack platform built to demonstrate production-ready software architecture using **Java 21**, **Spring Boot 3.5**, **Angular 20**, **SQL Server**, and **Spring Security**.
 
-The project emphasizes clean architecture, scalability, maintainability, secure authentication and modular software design following enterprise development practices.
+The project emphasizes maintainability, scalability, secure authentication, modular software design, and enterprise development practices.
 
 ---
 
@@ -27,13 +27,14 @@ The project emphasizes clean architecture, scalability, maintainability, secure 
 | Backend | ✅ Stable |
 | Authentication | ✅ Completed |
 | Authorization (RBAC) | ✅ Completed |
+| User Management | ✅ Completed |
 | Angular Bootstrap | ✅ Completed |
 | Login Module | ✅ Completed |
 | Application Layout | ✅ Completed |
+| GitHub Actions CI | ✅ Completed |
 | Dashboard Structure | 🚧 In Progress |
-| User Management | 📋 Planned |
 | Role Management | 📋 Planned |
-| CI/CD | 📋 Planned |
+| Permission Management | 📋 Planned |
 
 ---
 
@@ -50,6 +51,7 @@ The project emphasizes clean architecture, scalability, maintainability, secure 
 | Documentation | OpenAPI / Swagger |
 | Infrastructure | Docker, Docker Compose |
 | Build | Maven |
+| CI | GitHub Actions |
 
 ---
 
@@ -62,12 +64,15 @@ The project emphasizes clean architecture, scalability, maintainability, secure 
 - Spring Security 6
 - JWT Authentication
 - Role-Based Access Control (RBAC)
+- Permission-Based Authorization
+- User Management
 - SQL Server + Flyway
 - Dockerized Development Environment
 - OpenAPI / Swagger
 - Responsive User Interface
-- Clean Architecture
 - SOLID Principles
+- Clean Code
+- GitHub Actions CI
 
 ---
 
@@ -77,7 +82,9 @@ The project emphasizes clean architecture, scalability, maintainability, secure 
     <img src="docs/images/architecture.png" width="100%" alt="ORIGEN Architecture">
 </p>
 
-ORIGEN follows a modular enterprise architecture where each business module owns its controllers, services, repositories, DTOs and entities, promoting maintainability, scalability and clear separation of responsibilities.
+ORIGEN follows a **modular monolith architecture**, where each business module contains its own controllers, services, repositories, DTOs, and entities.
+
+This structure promotes clear separation of responsibilities, maintainability, and scalability while keeping the application simple to develop and deploy.
 
 ---
 
@@ -111,8 +118,12 @@ Interactive REST API documentation generated using OpenAPI 3.
 - Spring Boot 3.5
 - REST API
 - Spring Data JPA
+- DTO-based API design
 - Bean Validation
+- User CRUD
+- Duplicate resource validation
 - Global Exception Handling
+- Standardized API responses
 
 ## Security
 
@@ -120,17 +131,30 @@ Interactive REST API documentation generated using OpenAPI 3.
 - JWT Authentication
 - BCrypt Password Encryption
 - Role-Based Access Control (RBAC)
+- Permission-Based Authorization
+- Method-Level Security
+- Stateless Authentication
 
 ## Database
 
 - SQL Server 2022
+- Spring Data JPA
+- Hibernate
 - Flyway Database Versioning
+- Role and Permission Model
 
 ## Infrastructure
 
 - Docker
 - Docker Compose
 - External Configuration
+- Maven Wrapper
+
+## CI
+
+- GitHub Actions
+- Maven Build Verification
+- Automated Backend Build
 
 ---
 
@@ -140,7 +164,6 @@ Interactive REST API documentation generated using OpenAPI 3.
 
 ```bash
 git clone https://github.com/esteban-navarro/ORIGEN.git
-
 cd ORIGEN
 ```
 
@@ -148,13 +171,13 @@ cd ORIGEN
 
 ## 2. Configure the Backend
 
-Copy
+Copy:
 
 ```text
 backend/src/main/resources/application-local.example.yml
 ```
 
-to
+to:
 
 ```text
 backend/src/main/resources/application-local.yml
@@ -176,15 +199,20 @@ docker compose -f docker/docker-compose.yml up -d
 
 ```bash
 cd backend
-
-mvn clean install
-
-mvn spring-boot:run
+./mvnw clean verify
+./mvnw spring-boot:run
 ```
 
-Backend URL
+On Windows:
 
+```bash
+mvnw.cmd clean verify
+mvnw.cmd spring-boot:run
 ```
+
+Backend URL:
+
+```text
 http://localhost:8080
 ```
 
@@ -196,15 +224,13 @@ Open a new terminal.
 
 ```bash
 cd frontend
-
 npm install
-
 ng serve
 ```
 
-Frontend URL
+Frontend URL:
 
-```
+```text
 http://localhost:4200
 ```
 
@@ -212,21 +238,21 @@ Login using the default administrator account:
 
 | Username | Password |
 |----------|----------|
-| admin | Password123! |
+| admin | Admin123* |
 
 ---
 
 ## 6. API Documentation
 
-Swagger UI
+Swagger UI:
 
-```
+```text
 http://localhost:8080/swagger-ui.html
 ```
 
-OpenAPI
+OpenAPI:
 
-```
+```text
 http://localhost:8080/v3/api-docs
 ```
 
@@ -248,6 +274,22 @@ ORIGEN
 └── LICENSE
 ```
 
+The backend follows a modular structure organized by business feature:
+
+```text
+backend/src/main/java/cl/origen/platform
+
+├── common
+├── config
+├── security
+└── modules
+    ├── auth
+    ├── health
+    └── user
+```
+
+Each module contains the layers required by its responsibilities, such as controllers, services, repositories, DTOs, and entities.
+
 ---
 
 # Roadmap
@@ -258,6 +300,7 @@ ORIGEN
 - Spring Security
 - JWT Authentication
 - RBAC Authorization
+- User Management
 - SQL Server Integration
 - Flyway Migrations
 - Docker Environment
@@ -265,6 +308,7 @@ ORIGEN
 - Angular Bootstrap
 - Login Module
 - Application Layout
+- GitHub Actions CI
 
 ---
 
@@ -278,26 +322,25 @@ ORIGEN
 
 ## Planned
 
-- User Management
 - Role Management
 - Permission Management
 - Refresh Token
 - Automated Testing
-- GitHub Actions
-- CI/CD Pipeline
+- Full CI/CD Pipeline
 
 ---
 
 # Development Practices
 
-- Clean Architecture
-- SOLID Principles
-- Layered Architecture
-- REST API Design
 - Modular Monolith
+- Modular Architecture
+- Layered Architecture
+- SOLID Principles
+- Clean Code
+- REST API Design
+- DTO-based API Design
 - Conventional Commits
 - Git Flow
-- Clean Code
 
 ---
 

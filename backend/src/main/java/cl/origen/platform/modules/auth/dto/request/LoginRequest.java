@@ -1,4 +1,4 @@
-package cl.origen.platform.modules.auth.dto;
+package cl.origen.platform.modules.auth.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
