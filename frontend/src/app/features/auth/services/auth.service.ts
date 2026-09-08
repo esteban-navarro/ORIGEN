@@ -7,8 +7,8 @@ import { API_CONFIG } from '@core/configuration/api.config';
 
 import { Response } from '@core/models/response';
 
-import { LoginRequest } from '@features/auth/models/login-request';
-import { LoginResponse } from '@features/auth/models/login-response';
+import { LoginRequest } from '@features/auth/models/request/login-request';
+import { LoginResponse } from '@features/auth/models/response/login-response';
 
 @Injectable({
     providedIn: 'root'

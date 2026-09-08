@@ -12,28 +12,28 @@ export const routes: Routes = [
         import('@features/auth/pages/login/login')
           .then(m => m.LoginComponent)
     },
-
     {
-    path: '',
-    component: ApplicationLayoutComponent,
-
-    canActivate: [
-      authGuard
-    ],
-
-    children: [
-      {
-        path: '',
-        loadComponent: () =>
-          import('@features/dashboard/pages/dashboard/dashboard')
-            .then(m => m.DashboardComponent)
-      }
-    ]
-  },
-
-  {
-    path: '**',
-    redirectTo: ''
-  }
+      path: '',
+      component: ApplicationLayoutComponent,
+      canActivate: [authGuard],
+      children: [
+        {
+          path: '',
+          loadComponent: () =>
+            import('@features/dashboard/pages/dashboard/dashboard')
+              .then(m => m.DashboardComponent)
+        },
+        {
+          path: 'users',
+          loadComponent: () =>
+            import('@features/user/pages/users/users')
+              .then(m => m.UsersComponent)
+        }
+      ]
+    },
+    {
+      path: '**',
+      redirectTo: ''
+    }
 
 ];

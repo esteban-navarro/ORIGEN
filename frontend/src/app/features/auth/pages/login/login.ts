@@ -13,11 +13,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
 import { AuthService } from '@features/auth/services/auth.service';
-import { LoginRequest } from '@features/auth/models/login-request';
+import { LoginRequest } from '@features/auth/models/request/login-request';
 
 import { Router } from '@angular/router';
 
 import { TokenService } from '@core/services/token.service';
+import { CurrentUserService } from '@core/services/current-user.service';
 
 @Component({
     selector: 'app-login',
@@ -48,14 +49,12 @@ export class LoginComponent {
     readonly hidePassword = signal(true);
 
     readonly loginForm = this.fb.nonNullable.group({
-
         username: ['', [Validators.required]],
-
         password: ['', [Validators.required]],
-
         remember: [false]
-
     });
+
+    private readonly currentUserService = inject(CurrentUserService);
 
     login(): void {
 
@@ -81,6 +80,7 @@ export class LoginComponent {
                 next: response => {
 
                     this.tokenService.save(response.data.accessToken);
+                    this.currentUserService.save(response.data.user);
                     this.router.navigate(['/']);
                 },
 

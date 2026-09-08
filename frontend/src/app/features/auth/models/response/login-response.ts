@@ -1,4 +1,5 @@
-import { AuthenticatedUser } from './authenticated-user';
+import { AuthenticatedUser } from "./authenticated-user";
+
 
 export interface LoginResponse {
 

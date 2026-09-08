@@ -1,0 +1,78 @@
+<div class="users-page">
+
+    <div class="page-header">
+        <div>
+            <h1>Usuarios</h1>
+            <p>Gestión de usuarios del sistema</p>
+        </div>
+
+        <button
+            type="button"
+            (click)="openCreateDialog()">
+            + Nuevo usuario
+        </button>
+    </div>
+
+    @if (errorMessage) {
+        <p>{{ errorMessage }}</p>
+    }
+
+    @if (loading) {
+        <p>Cargando usuarios...</p>
+    }
+
+    @if (!loading) {
+        <div class="users-table">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Email</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @for (user of paginatedUsers; track user.id) {
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.firstName }} {{ user.lastName }}</td>
+                            <td>
+                                {{ user.enabled ? 'Activo' : 'Inactivo' }}
+                            </td>
+                            <td>
+                              <button
+                                  type="button"
+                                  mat-button
+                                  (click)="openEditDialog(user)">
+                                  Editar
+                              </button>
+                              <button
+                                type="button"
+                                mat-button
+                                (click)="deleteUser(user)">
+                                Eliminar
+                            </button>
+                          </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <mat-paginator
+              [length]="users.length"
+              [pageIndex]="pageIndex"
+              [pageSize]="pageSize"
+              [pageSizeOptions]="[5, 10, 25]"
+              (page)="onPageChange($event)"
+              showFirstLastButtons>
+          </mat-paginator>
+
+        </div>
+    }
+
+</div>

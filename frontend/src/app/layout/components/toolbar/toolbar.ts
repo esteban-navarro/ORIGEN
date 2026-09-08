@@ -1,5 +1,4 @@
 import { Component, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,37 +10,47 @@ import { MatMenuModule } from '@angular/material/menu';
 import { Router } from '@angular/router';
 
 import { TokenService } from '@core/services/token.service';
-
-
+import { CurrentUserService } from '@core/services/current-user.service';
 
 @Component({
-  selector: 'app-toolbar',
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatMenuModule
-  ],
-  templateUrl: './toolbar.html',
-  styleUrl: './toolbar.scss'
+    selector: 'app-toolbar',
+    standalone: true,
+    imports: [
+        MatToolbarModule,
+        MatButtonModule,
+        MatIconModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatMenuModule
+    ],
+    templateUrl: './toolbar.html',
+    styleUrl: './toolbar.scss'
 })
 export class ToolbarComponent {
 
-  private readonly tokenService = inject(TokenService);
+    private readonly tokenService = inject(TokenService);
 
-  private readonly router = inject(Router);
+    private readonly currentUserService = inject(CurrentUserService);
 
-  readonly currentUser = 'Esteban Navarro';
+    private readonly router = inject(Router);
 
-  logout(): void {
+    readonly currentUser = this.getCurrentUserName();
 
-      this.tokenService.clear();
-      this.router.navigate(['/login']);
+    private getCurrentUserName(): string {
 
-  }
+        const user = this.currentUserService.get();
+
+        if (!user) {
+            return '';
+        }
+
+        return `${user.firstName} ${user.lastName}`;
+    }
+
+    logout(): void {
+        this.tokenService.clear();
+        this.currentUserService.clear();
+        this.router.navigate(['/login']);
+    }
 
 }

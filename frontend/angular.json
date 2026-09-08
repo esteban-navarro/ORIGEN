@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "origen-temp": {
+    "origen": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "origen-temp:build:production"
+              "buildTarget": "origen:build:production"
             },
             "development": {
-              "buildTarget": "origen-temp:build:development"
+              "buildTarget": "origen:build:development"
             }
           },
           "defaultConfiguration": "development"
