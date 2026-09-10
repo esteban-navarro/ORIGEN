@@ -19,3 +19,51 @@ form {
         grid-template-columns: 1fr;
     }
 }
+
+.dialog-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 20px 24px 20px;
+}
+
+.dialog-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 12px;
+
+    background-color: var(--color-primary-light);
+    color: var(--color-primary);
+
+    flex-shrink: 0;
+}
+
+.dialog-icon mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+}
+
+.dialog-header h2 {
+    margin: 0;
+    padding: 0;
+
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.dialog-header > div:last-child {
+    padding-top: 2px;
+}
+
+.dialog-subtitle {
+    margin: 4px 0 0;
+
+    color: var(--color-text-secondary);
+    font-size: 14px;
+}

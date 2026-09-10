@@ -1,0 +1,61 @@
+.dialog-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 8px 20px;
+}
+
+.dialog-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 44px;
+    height: 44px;
+
+    border-radius: 12px;
+
+    background-color: var(--color-error-background);
+    color: var(--color-error);
+
+    flex-shrink: 0;
+}
+
+.dialog-icon mat-icon {
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+}
+
+.dialog-header h2 {
+    margin: 0;
+    padding: 0;
+
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.dialog-subtitle {
+    margin: 4px 0 0;
+
+    color: var(--color-text-secondary);
+    font-size: 14px;
+}
+
+.confirmation-message {
+    margin: 0;
+    padding: 8px 0 16px;
+
+    color: var(--color-text-primary);
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+.delete-button {
+    background-color: var(--color-error) !important;
+    color: #FFFFFF !important;
+}
+
+.delete-button mat-icon {
+    margin-right: 4px;
+}

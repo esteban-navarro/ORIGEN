@@ -5,14 +5,16 @@
 
 .layout-container {
     height: calc(100vh - 64px);
+    background: #F6F8FB;
 }
 
 mat-sidenav {
     width: 280px;
-    border-right: 1px solid #E5E7EB;
-    background: #FFFFFF;
+    border-right: 1px solid var(--color-border);
+    background: var(--color-surface);
+    overflow-x: hidden;
 }
 
 mat-sidenav-content {
-    background: #F8FAFC;
+    background: var(--color-background);
 }

@@ -1,5 +1,33 @@
+@use './styles/tables';
+@use './styles/layout';
+
 // Include theming for Angular Material with `mat.theme()`.
 @use '@angular/material' as mat;
+
+:root {
+    --color-primary: #2563EB;
+    --color-primary-light: #EFF6FF;
+    --color-primary-hover: #1D4ED8;
+
+    --color-background: #F8FAFC;
+    --color-surface: #FFFFFF;
+
+    --color-text-primary: #111827;
+    --color-text-secondary: #64748B;
+    --color-text-muted: #94A3B8;
+
+    --color-border: #E5E7EB;
+    --color-border-light: #F1F5F9;
+
+    --color-success: #2E7D32;
+    --color-success-background: #E8F5E9;
+
+    --color-error: #C62828;
+    --color-error-background: #FFEBEE;
+
+    --color-inactive: #666666;
+    --color-inactive-background: #F5F5F5;
+}
 
 html {
   @include mat.theme((
@@ -26,4 +54,42 @@ body {
 
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* Snackbar */
+
+.mat-mdc-snack-bar-container.snackbar-success
+.mdc-snackbar__surface {
+    background-color: var(--color-success) !important;
+    color: #FFFFFF !important;
+}
+
+.mat-mdc-snack-bar-container.snackbar-error
+.mdc-snackbar__surface {
+    background-color: var(--color-error) !important;
+    color: #FFFFFF !important;
+}
+
+.mat-mdc-snack-bar-container.snackbar-warning
+.mdc-snackbar__surface {
+    background-color: #B45309 !important;
+    color: #FFFFFF !important;
+}
+
+.mat-mdc-snack-bar-container.snackbar-success
+.mdc-snackbar__label,
+.mat-mdc-snack-bar-container.snackbar-error
+.mdc-snackbar__label,
+.mat-mdc-snack-bar-container.snackbar-warning
+.mdc-snackbar__label {
+    color: #FFFFFF !important;
+}
+
+.mat-mdc-snack-bar-container.snackbar-success
+.mat-mdc-snack-bar-action,
+.mat-mdc-snack-bar-container.snackbar-error
+.mat-mdc-snack-bar-action,
+.mat-mdc-snack-bar-container.snackbar-warning
+.mat-mdc-snack-bar-action {
+    color: #FFFFFF !important;
 }

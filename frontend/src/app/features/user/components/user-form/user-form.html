@@ -1,16 +1,27 @@
-<h2 mat-dialog-title>
-    {{ isEditMode ? 'Editar usuario' : 'Nuevo usuario' }}
-</h2>
+<div class="dialog-header">
+    <div class="dialog-icon">
+        <mat-icon>
+            {{ isEditMode ? 'edit' : 'person_add' }}
+        </mat-icon>
+    </div>
+
+    <div>
+        <h2>
+            {{ isEditMode ? 'Editar usuario' : 'Nuevo usuario' }}
+        </h2>
+
+        <p class="dialog-subtitle">
+            {{ isEditMode
+                ? 'Modifica la información del usuario.'
+                : 'Completa la información para crear un nuevo usuario.'
+            }}
+        </p>
+    </div>
+</div>
 
 <form [formGroup]="userForm" (ngSubmit)="submit()">
 
     <mat-dialog-content>
-
-        @if (errorMessage) {
-            <div class="error-message">
-                {{ errorMessage }}
-            </div>
-        }
 
         <div class="form-grid">
 

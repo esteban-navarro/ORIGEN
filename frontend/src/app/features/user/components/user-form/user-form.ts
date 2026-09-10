@@ -6,15 +6,23 @@ import { MatButtonModule } from '@angular/material/button';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
 
 import { CreateUserRequest } from '@features/user/models/request/create-user-request';
 import { UpdateUserRequest } from '@features/user/models/request/update-user-request';
 import { UserResponse } from '@features/user/models/response/user-response';
 import { UserService } from '@features/user/services/user.service';
 
+import { NotificationService } from '@shared/services/notification';
+
 export interface UserFormDialogData {
     mode: 'create' | 'edit';
     user?: UserResponse;
+}
+
+export interface UserFormDialogResult {
+    user: UserResponse;
+    message: string;
 }
 
 @Component({
@@ -24,7 +32,8 @@ export interface UserFormDialogData {
         MatButtonModule,
         MatDialogModule,
         MatFormFieldModule,
-        MatInputModule
+        MatInputModule,
+        MatIconModule
     ],
     templateUrl: './user-form.html',
     styleUrl: './user-form.scss'
@@ -33,12 +42,11 @@ export class UserFormComponent {
 
     private readonly formBuilder = inject(FormBuilder);
     private readonly userService = inject(UserService);
-
-    private readonly dialogRef = inject(MatDialogRef<UserFormComponent, UserResponse | undefined>);
+    private readonly notificationService = inject(NotificationService);
+    private readonly dialogRef = inject(MatDialogRef<UserFormComponent, UserFormDialogResult | undefined>);
     private readonly dialogData = inject<UserFormDialogData>(MAT_DIALOG_DATA);
 
     saving = false;
-    errorMessage = '';
 
     readonly isEditMode = this.dialogData.mode === 'edit';
 
@@ -66,7 +74,6 @@ export class UserFormComponent {
         }
 
         this.saving = true;
-        this.errorMessage = '';
 
         if (this.isEditMode) {
             this.updateUser();
@@ -108,13 +115,17 @@ export class UserFormComponent {
         this.userService.create(request).subscribe({
             next: response => {
                 this.saving = false;
-                this.dialogRef.close(response.data);
+                this.dialogRef.close({
+                    user: response.data,
+                    message: response.message
+                });
             },
 
             error: (error: HttpErrorResponse) => {
                 this.saving = false;
-                this.errorMessage =
-                    error.error?.message ?? 'No se pudo crear el usuario.';
+                this.notificationService.error(
+                    error.error?.message ?? 'No se pudo crear el usuario.'
+                );
             }
         });
     }
@@ -124,7 +135,7 @@ export class UserFormComponent {
 
         if (!userId) {
             this.saving = false;
-            this.errorMessage = 'No se pudo identificar el usuario.';
+            this.notificationService.error('No se pudo identificar el usuario.');
             return;
         }
 
@@ -139,13 +150,17 @@ export class UserFormComponent {
         this.userService.update(userId, request).subscribe({
             next: response => {
                 this.saving = false;
-                this.dialogRef.close(response.data);
+                this.dialogRef.close({
+                    user: response.data,
+                    message: response.message
+                });
             },
 
             error: (error: HttpErrorResponse) => {
                 this.saving = false;
-                this.errorMessage =
-                    error.error?.message ?? 'No se pudo actualizar el usuario.';
+                 this.notificationService.error(
+                    error.error?.message ?? 'No se pudo actualizar el usuario.'
+                );
             }
         });
     }

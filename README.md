@@ -1,8 +1,6 @@
 <p align="center">
-    <img src="docs/images/origen-logo.png" width="220" alt="ORIGEN Logo">
+<img src="docs/images/origen-logo.png" width="220" alt="ORIGEN Logo">
 </p>
-
-<h1 align="center">ORIGEN</h1>
 
 <p align="center">
 <b>Modern Enterprise Full Stack Platform</b>
@@ -31,8 +29,9 @@ The project emphasizes maintainability, scalability, secure authentication, modu
 | Angular Bootstrap | ✅ Completed |
 | Login Module | ✅ Completed |
 | Application Layout | ✅ Completed |
+| User Management UI | ✅ Completed |
 | GitHub Actions CI | ✅ Completed |
-| Dashboard Structure | 🚧 In Progress |
+| Dashboard | 🚧 In Progress |
 | Role Management | 📋 Planned |
 | Permission Management | 📋 Planned |
 
@@ -61,25 +60,25 @@ The project emphasizes maintainability, scalability, secure authentication, modu
 - Modular Monolith Architecture
 - Java 21 + Spring Boot 3.5
 - Angular 20 + Angular Material
-- Spring Security 6
-- JWT Authentication
+- Spring Security 6 + JWT Authentication
 - Role-Based Access Control (RBAC)
 - Permission-Based Authorization
-- User Management
+- Full User Management (CRUD)
+- Reactive Forms + Angular Material UI
+- Permission-Aware Frontend
 - SQL Server + Flyway
 - Dockerized Development Environment
 - OpenAPI / Swagger
-- Responsive User Interface
+- GitHub Actions CI
 - SOLID Principles
 - Clean Code
-- GitHub Actions CI
 
 ---
 
 # System Overview
 
 <p align="center">
-    <img src="docs/images/architecture.png" width="100%" alt="ORIGEN Architecture">
+<img src="docs/images/architecture.png" width="100%" alt="ORIGEN Architecture">
 </p>
 
 ORIGEN follows a **modular monolith architecture**, where each business module contains its own controllers, services, repositories, DTOs, and entities.
@@ -93,17 +92,27 @@ This structure promotes clear separation of responsibilities, maintainability, a
 ## Angular Login
 
 <p align="center">
-    <img src="docs/images/login.png" width="100%" alt="Angular Login">
+<img src="docs/images/login.png" width="100%" alt="Angular Login">
 </p>
 
 Modern authentication interface built with Angular 20 and Angular Material.
 
 ---
 
+## User Management
+
+<p align="center">
+<img src="docs/images/users.png" width="100%" alt="User Management">
+</p>
+
+User management interface with CRUD operations, pagination, validation, permission-aware actions, and Angular Material dialogs.
+
+---
+
 ## Swagger API
 
 <p align="center">
-    <img src="docs/images/swagger.png" width="100%" alt="Swagger UI">
+<img src="docs/images/swagger.png" width="100%" alt="Swagger UI">
 </p>
 
 Interactive REST API documentation generated using OpenAPI 3.
@@ -124,6 +133,19 @@ Interactive REST API documentation generated using OpenAPI 3.
 - Duplicate resource validation
 - Global Exception Handling
 - Standardized API responses
+
+## Frontend
+
+- Angular 20
+- Angular Material
+- Reactive Forms
+- User Management
+- Create / Edit / Delete Dialogs
+- User Table with Pagination
+- Permission-Aware Actions
+- Authentication Guards
+- JWT HTTP Interceptor
+- Success and Error Notifications
 
 ## Security
 
@@ -262,6 +284,7 @@ http://localhost:8080/v3/api-docs
 
 ```text
 ORIGEN
+
 │
 ├── backend
 ├── frontend
@@ -301,6 +324,7 @@ Each module contains the layers required by its responsibilities, such as contro
 - JWT Authentication
 - RBAC Authorization
 - User Management
+- User Management UI
 - SQL Server Integration
 - Flyway Migrations
 - Docker Environment
@@ -308,6 +332,8 @@ Each module contains the layers required by its responsibilities, such as contro
 - Angular Bootstrap
 - Login Module
 - Application Layout
+- Frontend Navigation
+- Feature Modules
 - GitHub Actions CI
 
 ---
@@ -315,8 +341,6 @@ Each module contains the layers required by its responsibilities, such as contro
 ## In Progress
 
 - Dashboard Module
-- Frontend Navigation
-- Feature Modules
 
 ---
 

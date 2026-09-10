@@ -10,32 +10,27 @@ export class CurrentUserService {
     private static readonly USER_KEY = 'origen-user';
 
     save(user: AuthenticatedUser): void {
-
         localStorage.setItem(
             CurrentUserService.USER_KEY,
             JSON.stringify(user)
         );
-
     }
 
     get(): AuthenticatedUser | null {
-
-        const user = localStorage.getItem(
-            CurrentUserService.USER_KEY
-        );
+        const user = localStorage.getItem(CurrentUserService.USER_KEY);
 
         return user
             ? JSON.parse(user) as AuthenticatedUser
             : null;
+    }
 
+    hasPermission(permission: string): boolean {
+        const user = this.get();
+
+        return user?.permissions.includes(permission) ?? false;
     }
 
     clear(): void {
-
-        localStorage.removeItem(
-            CurrentUserService.USER_KEY
-        );
-
+        localStorage.removeItem(CurrentUserService.USER_KEY);
     }
-
 }

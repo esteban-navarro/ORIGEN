@@ -1,19 +1,30 @@
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, OnInit, inject, ViewChild } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 
-import { UserFormComponent, UserFormDialogData } from '@features/user/components/user-form/user-form';
+import { UserFormComponent, UserFormDialogData, UserFormDialogResult } from '@features/user/components/user-form/user-form';
 import { UserResponse } from '@features/user/models/response/user-response';
 import { UserService } from '@features/user/services/user.service';
+import { DeleteUserDialogComponent, DeleteUserDialogData } from '@features/user/components/delete-user-dialog/delete-user-dialog';
+
+import { NotificationService } from '@shared/services/notification';
+
+import { CurrentUserService } from '@core/services/current-user.service';
 
 @Component({
     selector: 'app-users',
     imports: [
         MatButtonModule,
         MatDialogModule,
-        MatPaginatorModule
+        MatPaginatorModule,
+        MatIconModule,
+        MatTooltipModule,
+        MatTableModule
     ],
     templateUrl: './users.html',
     styleUrl: './users.scss'
@@ -22,29 +33,28 @@ export class UsersComponent implements OnInit {
 
     private readonly userService = inject(UserService);
     private readonly dialog = inject(MatDialog);
+    private readonly notificationService = inject(NotificationService);
+    private readonly currentUserService = inject(CurrentUserService);
 
-    users: UserResponse[] = [];
+    readonly dataSource = new MatTableDataSource<UserResponse>([]);
+
+    readonly displayedColumns = [
+        'username',
+        'email',
+        'name',
+        'status',
+        'actions'
+    ];
+
+    @ViewChild(MatPaginator)
+    set paginator(paginator: MatPaginator) {
+        this.dataSource.paginator = paginator;
+    }
 
     loading = false;
-    errorMessage = '';
-
-    pageIndex = 0;
-    pageSize = 10;
 
     ngOnInit(): void {
         this.loadUsers();
-    }
-
-    get paginatedUsers(): UserResponse[] {
-        const startIndex = this.pageIndex * this.pageSize;
-        const endIndex = startIndex + this.pageSize;
-
-        return this.users.slice(startIndex, endIndex);
-    }
-
-    onPageChange(event: PageEvent): void {
-        this.pageIndex = event.pageIndex;
-        this.pageSize = event.pageSize;
     }
 
     openCreateDialog(): void {
@@ -56,9 +66,10 @@ export class UsersComponent implements OnInit {
             } satisfies UserFormDialogData
         });
 
-        dialogRef.afterClosed().subscribe(user => {
-            if (user) {
-                this.users = [...this.users, user];
+        dialogRef.afterClosed().subscribe((result: UserFormDialogResult | undefined) => {
+            if (result) {
+                this.dataSource.data = [...this.dataSource.data, result.user];
+                this.notificationService.success(result.message);
             }
         });
     }
@@ -73,74 +84,81 @@ export class UsersComponent implements OnInit {
             } satisfies UserFormDialogData
         });
 
-        dialogRef.afterClosed().subscribe(updatedUser => {
-            if (updatedUser) {
-                this.users = this.users.map(currentUser =>
-                    currentUser.id === updatedUser.id
-                        ? updatedUser
+        dialogRef.afterClosed().subscribe((result: UserFormDialogResult | undefined) => {
+            if (result) {
+                this.dataSource.data = this.dataSource.data.map(currentUser =>
+                    currentUser.id === result.user.id
+                        ? result.user
                         : currentUser
                 );
+                this.notificationService.success(result.message);
             }
         });
     }
 
     deleteUser(user: UserResponse): void {
-        const confirmed = window.confirm(
-            `¿Estás seguro de que deseas eliminar al usuario "${user.username}"?`
-        );
+      const dialogRef = this.dialog.open(
+          DeleteUserDialogComponent,
+          {
+              width: '500px',
+              maxWidth: '95vw',
+              data: {
+                  username: user.username
+              } satisfies DeleteUserDialogData
+          }
+      );
 
-        if (!confirmed) {
-            return;
-        }
+      dialogRef.afterClosed().subscribe(confirmed => {
+          if (!confirmed) {
+              return;
+          }
 
-        this.errorMessage = '';
+          this.userService.delete(user.id).subscribe({
+              next: response => {
+                  this.dataSource.data = this.dataSource.data.filter(
+                      currentUser => currentUser.id !== user.id
+                  );
+                  this.notificationService.success(response.message);
+              },
 
-        this.userService.delete(user.id).subscribe({
-            next: () => {
-                this.users = this.users.filter(
-                    currentUser => currentUser.id !== user.id
-                );
+              error: error => {
+                  console.error('Error deleting user:', error);
 
-                this.adjustPageAfterDelete();
-            },
-
-            error: error => {
-                console.error('Error deleting user:', error);
-                this.errorMessage = 'No se pudo eliminar el usuario.';
-            }
-        });
+                  this.notificationService.error(
+                      error.error?.message ?? 'No se pudo eliminar el usuario.'
+                  );
+              }
+          });
+      });
     }
 
     private loadUsers(): void {
         this.loading = true;
-        this.errorMessage = '';
 
         this.userService.findAll().subscribe({
             next: response => {
-                this.users = response.data;
+                this.dataSource.data = response.data;
                 this.loading = false;
             },
 
             error: error => {
                 console.error('Error loading users:', error);
-                this.errorMessage = 'No se pudieron cargar los usuarios.';
+                this.notificationService.error('No se pudieron cargar los usuarios.');
                 this.loading = false;
             }
         });
     }
 
-    private adjustPageAfterDelete(): void {
-        const totalPages = Math.ceil(this.users.length / this.pageSize);
-
-        if (totalPages === 0) {
-            this.pageIndex = 0;
-            return;
-        }
-
-        const lastPageIndex = totalPages - 1;
-
-        if (this.pageIndex > lastPageIndex) {
-            this.pageIndex = lastPageIndex;
-        }
+    hasCreatePermission(): boolean {
+        return this.currentUserService.hasPermission('USER_CREATE');
     }
+
+    hasUpdatePermission(): boolean {
+        return this.currentUserService.hasPermission('USER_UPDATE');
+    }
+
+    hasDeletePermission(): boolean {
+        return this.currentUserService.hasPermission('USER_DELETE');
+    }
+
 }

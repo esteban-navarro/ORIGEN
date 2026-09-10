@@ -1,0 +1,38 @@
+<div class="dialog-header">
+    <div class="dialog-icon">
+        <mat-icon>warning</mat-icon>
+    </div>
+
+    <div>
+        <h2 mat-dialog-title>Eliminar usuario</h2>
+
+        <p class="dialog-subtitle">
+            Esta acción no se puede deshacer.
+        </p>
+    </div>
+</div>
+
+<mat-dialog-content>
+    <p class="confirmation-message">
+        ¿Estás seguro de que deseas eliminar al usuario
+        <strong>"{{ dialogData.username }}"</strong>?
+    </p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button
+        type="button"
+        mat-button
+        (click)="cancel()">
+        Cancelar
+    </button>
+
+    <button
+        type="button"
+        mat-flat-button
+        class="delete-button"
+        (click)="confirm()">
+        <mat-icon>delete</mat-icon>
+        Eliminar
+    </button>
+</mat-dialog-actions>
