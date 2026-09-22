@@ -14,7 +14,7 @@ Java 21 • Spring Boot 3.5 • Angular 20 • SQL Server • JWT • Docker
 
 ORIGEN is a modern enterprise Full Stack platform built to demonstrate production-ready software architecture using **Java 21**, **Spring Boot 3.5**, **Angular 20**, **SQL Server**, and **Spring Security**.
 
-The project emphasizes maintainability, scalability, secure authentication, modular software design, and enterprise development practices.
+The project emphasizes maintainability, scalability, secure authentication, modular software design, automated testing, containerization, and enterprise development practices.
 
 ---
 
@@ -30,10 +30,16 @@ The project emphasizes maintainability, scalability, secure authentication, modu
 | Login Module | ✅ Completed |
 | Application Layout | ✅ Completed |
 | User Management UI | ✅ Completed |
+| Backend Unit Tests | ✅ Completed |
+| Backend Integration Tests | ✅ Completed |
+| Frontend Unit Tests | ✅ Completed |
+| Dockerized Application Stack | ✅ Completed |
 | GitHub Actions CI | ✅ Completed |
 | Dashboard | 🚧 In Progress |
 | Role Management | 📋 Planned |
 | Permission Management | 📋 Planned |
+| Full CI/CD Pipeline | 📋 Planned |
+| Apigee API Management | 📋 Planned |
 
 ---
 
@@ -48,8 +54,9 @@ The project emphasizes maintainability, scalability, secure authentication, modu
 | Database | SQL Server 2022 |
 | Database Versioning | Flyway |
 | Documentation | OpenAPI / Swagger |
-| Infrastructure | Docker, Docker Compose |
-| Build | Maven |
+| Testing | JUnit 5, Mockito, AssertJ, Testcontainers, Jasmine/Karma |
+| Infrastructure | Docker, Docker Compose, Nginx |
+| Build | Maven, npm |
 | CI | GitHub Actions |
 
 ---
@@ -67,8 +74,10 @@ The project emphasizes maintainability, scalability, secure authentication, modu
 - Reactive Forms + Angular Material UI
 - Permission-Aware Frontend
 - SQL Server + Flyway
-- Dockerized Development Environment
+- Dockerized Backend, Frontend and SQL Server environment
+- Nginx serving the Angular application
 - OpenAPI / Swagger
+- Automated Unit and Integration Testing
 - GitHub Actions CI
 - SOLID Principles
 - Clean Code
@@ -82,6 +91,8 @@ The project emphasizes maintainability, scalability, secure authentication, modu
 </p>
 
 ORIGEN follows a **modular monolith architecture**, where each business module contains its own controllers, services, repositories, DTOs, and entities.
+
+The application is containerized using Docker Compose, with the Angular frontend served by Nginx, the Spring Boot backend running as a separate container, and SQL Server providing persistence.
 
 This structure promotes clear separation of responsibilities, maintainability, and scalability while keeping the application simple to develop and deploy.
 
@@ -133,6 +144,7 @@ Interactive REST API documentation generated using OpenAPI 3.
 - Duplicate resource validation
 - Global Exception Handling
 - Standardized API responses
+- Unit and integration testing
 
 ## Frontend
 
@@ -146,6 +158,7 @@ Interactive REST API documentation generated using OpenAPI 3.
 - Authentication Guards
 - JWT HTTP Interceptor
 - Success and Error Notifications
+- Unit testing with Jasmine/Karma
 
 ## Security
 
@@ -169,14 +182,21 @@ Interactive REST API documentation generated using OpenAPI 3.
 
 - Docker
 - Docker Compose
+- Dockerized Angular + Nginx
+- Dockerized Spring Boot backend
+- SQL Server container
 - External Configuration
+- Environment-based configuration
 - Maven Wrapper
 
 ## CI
 
 - GitHub Actions
-- Maven Build Verification
-- Automated Backend Build
+- Automated Backend Build and Verification
+- Frontend Tests
+- Frontend Build
+- Backend Unit and Integration Tests
+- Testcontainers for SQL Server integration testing
 
 ---
 
@@ -207,17 +227,78 @@ backend/src/main/resources/application-local.yml
 
 and configure your local environment.
 
----
+For Docker, configure:
 
-## 3. Start SQL Server
+```text
+docker/.env
+```
 
-```bash
-docker compose -f docker/docker-compose.yml up -d
+using:
+
+```text
+docker/.env.example
 ```
 
 ---
 
-## 4. Run the Backend
+## 3. Start the Application Stack with Docker
+
+Build the backend:
+
+```bash
+cd backend
+./mvnw clean package
+```
+
+On Windows:
+
+```bash
+mvnw.cmd clean package
+```
+
+Build the backend image:
+
+```bash
+docker build -t origen-backend:local .
+```
+
+Build the frontend image from the `frontend` directory:
+
+```bash
+cd ../frontend
+docker build -t origen-frontend:local .
+```
+
+Return to the repository root and start the application stack:
+
+```bash
+cd ..
+docker compose --env-file docker/.env -f docker/docker-compose.yml --profile app up -d
+```
+
+The `app` profile starts:
+
+- SQL Server
+- Spring Boot backend
+- Angular frontend with Nginx
+
+Frontend:
+
+```text
+http://localhost:4200
+```
+
+Backend:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## 4. Run the Application Without Docker
+
+For local backend development:
 
 ```bash
 cd backend
@@ -238,11 +319,7 @@ Backend URL:
 http://localhost:8080
 ```
 
----
-
-## 5. Run the Frontend
-
-Open a new terminal.
+For the Angular frontend:
 
 ```bash
 cd frontend
@@ -264,7 +341,7 @@ Login using the default administrator account:
 
 ---
 
-## 6. API Documentation
+## 5. API Documentation
 
 Swagger UI:
 
@@ -306,6 +383,7 @@ backend/src/main/java/cl/origen/platform
 ├── config
 ├── security
 └── modules
+
     ├── auth
     ├── health
     └── user
@@ -328,12 +406,18 @@ Each module contains the layers required by its responsibilities, such as contro
 - SQL Server Integration
 - Flyway Migrations
 - Docker Environment
+- Dockerized Backend
+- Dockerized Frontend with Nginx
+- Docker Compose Application Stack
 - Swagger Documentation
 - Angular Bootstrap
 - Login Module
 - Application Layout
 - Frontend Navigation
 - Feature Modules
+- Backend Unit Testing
+- Backend Integration Testing with Testcontainers
+- Frontend Unit Testing
 - GitHub Actions CI
 
 ---
@@ -349,8 +433,8 @@ Each module contains the layers required by its responsibilities, such as contro
 - Role Management
 - Permission Management
 - Refresh Token
-- Automated Testing
 - Full CI/CD Pipeline
+- Apigee API Management
 
 ---
 
@@ -363,6 +447,7 @@ Each module contains the layers required by its responsibilities, such as contro
 - Clean Code
 - REST API Design
 - DTO-based API Design
+- Automated Testing
 - Conventional Commits
 - Git Flow
 

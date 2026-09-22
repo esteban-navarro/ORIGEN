@@ -29,7 +29,7 @@ server:
 
 application:
   name: ORIGEN
-  version: 1.2.0
+  version: 1.3.0
   description: Modern Enterprise Full Stack Platform
 
 springdoc:
