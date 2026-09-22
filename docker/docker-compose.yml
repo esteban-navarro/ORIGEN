@@ -36,7 +36,7 @@ services:
   backend:
 
     profiles:
-        - app
+      - app
 
     image: origen-backend:local
 
@@ -60,6 +60,26 @@ services:
 
     ports:
       - "8080:8080"
+
+    networks:
+      - origen-network
+
+  frontend:
+
+    profiles:
+      - app
+
+    image: origen-frontend:local
+
+    container_name: origen-frontend
+
+    restart: unless-stopped
+
+    depends_on:
+      - backend
+
+    ports:
+      - "4200:80"
 
     networks:
       - origen-network
