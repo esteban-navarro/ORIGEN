@@ -27,6 +27,8 @@ jobs:
 
       SQLSERVER_IMAGE: mcr.microsoft.com/mssql/server:2022-latest
       SQLSERVER_CONTAINER_NAME: origen-sqlserver
+      SQLSERVER_DATABASE: ORIGEN
+      SQLSERVER_USER: sa
       SQLSERVER_ACCEPT_EULA: Y
       SQLSERVER_PID: Developer
       SQLSERVER_PASSWORD: ${{ secrets.CI_DB_PASSWORD }}

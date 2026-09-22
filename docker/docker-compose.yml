@@ -33,6 +33,37 @@ services:
     networks:
       - origen-network
 
+  backend:
+
+    profiles:
+        - app
+
+    image: origen-backend:local
+
+    container_name: origen-backend
+
+    restart: unless-stopped
+
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+
+      DB_URL: jdbc:sqlserver://sqlserver:1433;databaseName=${SQLSERVER_DATABASE};encrypt=true;trustServerCertificate=true
+      DB_USERNAME: ${SQLSERVER_USER}
+      DB_PASSWORD: ${SQLSERVER_PASSWORD}
+
+      JWT_ISSUER: ${JWT_ISSUER}
+      JWT_SECRET: ${JWT_SECRET}
+
+    ports:
+      - "8080:8080"
+
+    networks:
+      - origen-network
+
 volumes:
 
   origen-sqlserver-data:
